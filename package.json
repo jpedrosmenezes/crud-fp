@@ -7,16 +7,14 @@
   ],
   "packageManager": "bun@1.3.13",
   "scripts": {
-    "setup": "bun install && bun run install:api",
-    "install:api": "cd apps/backend && python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt",
-    "dev": "concurrently \"bun run dev:web\" \"bun run dev:api\"",
-    "dev:web": "bun --cwd apps/frontend dev",
-    "dev:api": "cd apps/backend && . .venv/bin/activate && uvicorn app.main:app --reload",
-    "build": "bun run build:web",
-    "build:web": "bun --cwd apps/frontend build",
-    "start": "bun run build && concurrently \"bun run start:web\" \"bun run start:api\"",
-    "start:web": "bun --cwd apps/frontend start",
-    "start:api": "cd apps/backend && . .venv/bin/activate && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    "setup": "bun install",
+    "setup:windows": "cd apps/backend && python -m venv .venv && .venv\\Scripts\\pip install -r requirements.txt",
+    "setup:linux": "cd apps/backend && python -m venv .venv && .venv/bin/pip install -r requirements.txt",
+    "dev:windows": "concurrently \"bun --cwd apps/frontend dev\" \"cd apps/backend && .venv\\Scripts\\python -m uvicorn app.main:app --reload\"",
+    "dev:linux": "concurrently \"bun --cwd apps/frontend dev\" \"cd apps/backend && .venv/bin/python -m uvicorn app.main:app --reload\"",
+    "build": "bun --cwd apps/frontend build",
+    "start:windows": "bun run build && concurrently \"bun --cwd apps/frontend start\" \"cd apps/backend && .venv\\Scripts\\python -m uvicorn app.main:app --host 0.0.0.0 --port 8000\"",
+    "start:linux": "bun run build && concurrently \"bun --cwd apps/frontend start\" \"cd apps/backend && .venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port 8000\""
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.15",
