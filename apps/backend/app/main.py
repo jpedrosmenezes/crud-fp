@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Body, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import datetime as dt
 
 app = FastAPI()
 
@@ -87,7 +88,7 @@ def load_exercicios():
     exercicios = []
     if not os.path.exists(ARQ_EXERCICIOS):
         return exercicios
-    
+           
     with open(ARQ_EXERCICIOS, "r", encoding="utf-8") as f:
         for linha in f:
             data = linha.strip().split("|")
