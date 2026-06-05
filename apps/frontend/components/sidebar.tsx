@@ -4,6 +4,7 @@ import {
 	Dumbbell,
 	LayoutDashboard,
 	Lightbulb,
+	LoaderCircle,
 	LogOut,
 	Menu,
 	Target,
@@ -12,6 +13,7 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import useAuth from "@/app/login/auth-context";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -75,16 +77,24 @@ function SidebarLogo() {
 }
 
 function UserCard() {
+	const { user, isLoading } = useAuth();
+	if (isLoading) {
+		return (
+			<div className="h-full w-full flex justify-center items-center">
+				<LoaderCircle size={40} className="animate-spin text-gray-700" />
+			</div>
+		);
+	}
+	if (!user) return null;
 	return (
 		<div className="flex items-center gap-3 rounded-lg bg-[#f8faf8] px-3 py-2.5">
 			<Avatar className="size-9 bg-green-600">
 				<AvatarFallback className="bg-green-600 text-sm font-semibold text-white">
-					M
+					{user.nome.charAt(0)}
 				</AvatarFallback>
 			</Avatar>
 			<div className="flex flex-col gap-0.5">
-				<span className="text-sm font-medium text-[#0f1a0f]">Marina</span>
-				<span className="text-xs text-[#8a9a8a]">Ativo há 7 dias</span>
+				<span className="text-sm font-medium text-[#0f1a0f]">{user.nome}</span>
 			</div>
 		</div>
 	);

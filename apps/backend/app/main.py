@@ -133,10 +133,10 @@ def save_metas(usuario: str, metas: list):
     with open(path, "w", encoding="utf-8") as f:
         for m in metas:
             linha = "|".join([
-                m.get("descricao", ""),
-                m.get("prazo", ""),
-                m.get("status", "Em andamento")
-            ])
+        str(m.get("descricao", "")),
+        str(m.get("prazo", "")),
+        str(m.get("status", "Em andamento"))
+    ])
             f.write(linha + "\n")
 
 def load_metas(usuario: str) -> list:
