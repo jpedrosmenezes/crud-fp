@@ -1,20 +1,7 @@
 import type { Metadata } from "next";
-import React from "react";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import type React from "react";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
 	title: "FitPlanner - Sua jornada fitness começa aqui",
@@ -28,17 +15,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html
-			lang="en"
-			className={cn(
-				"h-full",
-				"antialiased",
-				geistSans.variable,
-				geistMono.variable,
-				"font-sans",
-				inter.variable,
-			)}
-		>
+		<html lang="pt-BR" className={cn("h-full", "antialiased")}>
 			<body className="min-h-full flex flex-col">{children}</body>
 		</html>
 	);
