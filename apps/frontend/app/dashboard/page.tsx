@@ -1,5 +1,5 @@
 "use client";
-import { Clock3, Dumbbell, Flame, LoaderCircle, Target } from "lucide-react";
+import { Clock3, Dumbbell, LoaderCircle, Target } from "lucide-react";
 import { useEffect, useState } from "react";
 import useAuth, {
 	type Exercicio,
@@ -13,117 +13,142 @@ export default function DashboardPage() {
 	const [treinos, setTreinos] = useState<Treino[] | null>(null);
 	const [metas, setMetas] = useState<Meta[] | null>(null);
 	const [exercicios, setExercicios] = useState<Exercicio[] | null>(null);
+
 	useEffect(() => {
-		fetchTreinos().then(setTreinos).catch(console.error);
-		fetchMetas().then(setMetas).catch(console.error);
-		fetchExercicios().then(setExercicios).catch(console.error);
-	}, [fetchTreinos, fetchMetas, fetchExercicios]);
-	if (isLoading && !user && !treinos && !metas && !exercicios) {
+		if (user) {
+			Promise.all([fetchTreinos(), fetchMetas(), fetchExercicios()])
+				.then(([t, m, e]) => {
+					setTreinos(t);
+					setMetas(m);
+					setExercicios(e);
+				})
+				.catch(console.error);
+		}
+	}, [user, fetchTreinos, fetchMetas, fetchExercicios]);
+
+	if (isLoading || !treinos || !metas || !exercicios) {
 		return (
-			<div className="h-full w-full flex justify-center items-center">
-				<LoaderCircle size={100} className="animate-spin text-gray-700" />
+			<div className="flex h-full items-center justify-center">
+				<LoaderCircle className="size-10 animate-spin text-[#4a5a4a]" />
 			</div>
 		);
 	}
 
-	if (user && !isLoading && treinos && metas && exercicios) {
-		console.log(treinos);
-		const stats = [
-			{
-				title: "Total de treinos",
-				value: treinos?.length,
-				icon: Dumbbell,
-			},
-			{
-				title: "Total de Metas",
-				value: metas.length,
-				icon: Target,
-			},
-			{
-				title: "Total de Exercícios",
-				value: exercicios.length,
-				icon: Clock3,
-			},
-		];
-		return (
-			<div className="min-h-screen bg-[#f8faf8]">
-				<div className="flex">
-					<main className="flex-1 p-10">
-						<div className="mb-8">
-							<h2 className="text-4xl font-extrabold">
-								Olá, {user.nome || "usuário"}
-							</h2>
-							<p className="text-muted-foreground">
-								Acompanhe sua evolução fitness.
-							</p>
+	if (!user) return null;
+
+	const stats = [
+		{ title: "Treinos", value: treinos.length, icon: Dumbbell },
+		{ title: "Metas", value: metas.length, icon: Target },
+		{ title: "Exercícios", value: exercicios.length, icon: Clock3 },
+		{
+			title: "Sequência",
+			value: (() => {
+				if (!metas.length) return "0 dias";
+				const completed = metas.filter((m) => m.status === "Concluída").length;
+				return `${completed} concluída${completed !== 1 ? "s" : ""}`;
+			})(),
+			icon: Target,
+		},
+	];
+
+	const statusColors: Record<string, string> = {
+		"Em andamento": "bg-blue-50 text-blue-700",
+		Concluída: "bg-green-50 text-green-700",
+		Pendente: "bg-amber-50 text-amber-700",
+	};
+
+	return (
+		<div className="p-6 md:p-10">
+			<div className="mb-8">
+				<h2 className="text-2xl font-bold text-[#0f1a0f]">Olá, {user.nome}!</h2>
+				<p className="text-sm text-[#6a7a6a]">
+					Aqui está o resumo da sua evolução fitness
+				</p>
+			</div>
+
+			<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+				{stats.map((stat) => {
+					const Icon = stat.icon;
+					return (
+						<div
+							key={stat.title}
+							className="rounded-2xl border bg-white p-5 shadow-sm"
+						>
+							<div className="mb-3 flex items-center justify-between">
+								<span className="text-sm text-[#6a7a6a]">{stat.title}</span>
+								<div className="flex size-8 items-center justify-center rounded-lg bg-green-50">
+									<Icon className="size-4 text-green-600" />
+								</div>
+							</div>
+							<p className="text-2xl font-bold text-[#0f1a0f]">{stat.value}</p>
 						</div>
+					);
+				})}
+			</div>
 
-						<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-							{stats.map((stat) => {
-								const Icon = stat.icon;
-
-								return (
-									<div
-										key={stat.title}
-										className="rounded-2xl border bg-card p-6 shadow-lg shadow-black/5"
-									>
-										<div className="mb-4 flex justify-between">
-											<span className="text-muted-foreground">
-												{stat.title}
-											</span>
-
-											<Icon className="text-primary" />
+			<div className="mt-6 grid gap-6 lg:grid-cols-2">
+				<div className="rounded-2xl border bg-white p-6 shadow-sm">
+					<h3 className="mb-4 text-lg font-semibold text-[#0f1a0f]">
+						Treinos Recentes
+					</h3>
+					{treinos.length === 0 ? (
+						<p className="text-sm text-[#8a9a8a]">Nenhum treino cadastrado</p>
+					) : (
+						<div className="flex flex-col gap-3">
+							{treinos.slice(0, 5).map((treino, _) => (
+								<div
+									key={treino.nome + String(_)}
+									className="flex items-center justify-between rounded-xl bg-[#f8faf8] p-3"
+								>
+									<div className="flex items-center gap-3">
+										<div className="flex size-8 items-center justify-center rounded-lg bg-green-50">
+											<Dumbbell className="size-4 text-green-600" />
 										</div>
-
-										<h3 className="text-3xl font-bold">{stat.value}</h3>
-									</div>
-								);
-							})}
-						</div>
-
-						<div className="mt-8 grid gap-6 lg:grid-cols-2">
-							<div className="rounded-2xl border bg-card p-6 shadow-lg shadow-black/5">
-								<h3 className="mb-4 text-xl font-bold">Treinos Recentes</h3>
-								<div className="space-y-4">
-									{treinos.slice(0, 3).map((treino, _) => (
-										<div
-											// biome-ignore lint/suspicious/noArrayIndexKey: <>
-											key={treino.nome + _}
-											className="rounded-xl bg-muted/50 p-4"
-										>
+										<span className="font-medium text-[#0f1a0f]">
 											{treino.nome}
-										</div>
-									))}
+										</span>
+									</div>
+									{treino.tipo && (
+										<span className="text-xs text-[#6a7a6a]">
+											{treino.tipo}
+										</span>
+									)}
 								</div>
-							</div>
-
-							<div className="rounded-2xl border bg-card p-6 shadow-lg shadow-black/5">
-								<h3 className="mb-4 text-xl font-bold">Metas Atuais</h3>
-
-								<div className="space-y-5">
-									{metas.slice(0, 3).map((meta, _) => (
-										<div
-											// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-											key={meta.descricao + _}
-											className="flex justify-between"
-										>
-											<p className="mb-2 font-medium">{meta.descricao}</p>
-											<div>
-												<p className="mb-2 text-sm text-gray-600">
-													{meta.status}
-												</p>
-												<p className="mb-2 text-sm text-gray-600">
-													Prazo: {meta.prazo} dias
-												</p>
-											</div>
-										</div>
-									))}
-								</div>
-							</div>
+							))}
 						</div>
-					</main>
+					)}
+				</div>
+
+				<div className="rounded-2xl border bg-white p-6 shadow-sm">
+					<h3 className="mb-4 text-lg font-semibold text-[#0f1a0f]">
+						Suas Metas
+					</h3>
+					{metas.length === 0 ? (
+						<p className="text-sm text-[#8a9a8a]">Nenhuma meta cadastrada</p>
+					) : (
+						<div className="flex flex-col gap-3">
+							{metas.slice(0, 5).map((meta, i) => (
+								<div
+									key={`${meta.descricao}-${
+										// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+										i
+									}`}
+									className="flex items-center justify-between rounded-xl bg-[#f8faf8] p-3"
+								>
+									<span className="font-medium text-[#0f1a0f]">
+										{meta.descricao}
+									</span>
+									<span
+										className={`rounded-lg px-2.5 py-1 text-xs font-medium ${statusColors[meta.status ?? "Pendente"] ?? "bg-gray-50 text-gray-700"}`}
+									>
+										{meta.status ?? "Pendente"}
+									</span>
+								</div>
+							))}
+						</div>
+					)}
 				</div>
 			</div>
-		);
-	}
+		</div>
+	);
 }

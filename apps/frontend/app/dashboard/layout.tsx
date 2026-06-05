@@ -1,6 +1,8 @@
+"use client";
+
+import { AuthProvider } from "@/app/login/auth-context";
 import { Sidebar } from "@/components/sidebar";
 import QueryProvider from "@/lib/getQueryClient";
-import { AuthProvider } from "../login/auth-context";
 
 export default function DashboardLayout({
 	children,
@@ -10,7 +12,7 @@ export default function DashboardLayout({
 	return (
 		<QueryProvider>
 			<AuthProvider>
-				<div className="flex h-screen">
+				<div className="flex h-screen flex-col md:flex-row">
 					<Sidebar />
 					<main className="flex-1 overflow-auto bg-[#f8faf8]">{children}</main>
 				</div>

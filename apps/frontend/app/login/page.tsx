@@ -21,7 +21,7 @@ const features = [
 const userSchema = z.object({
 	nome: z
 		.string()
-		.min(3, "O nome precisa ter no mínimo 5 caracteres.")
+		.min(3, "O nome precisa ter no mínimo 3 caracteres.")
 		.max(32, "O nome pode ter no máximo 32 caracteres."),
 });
 
