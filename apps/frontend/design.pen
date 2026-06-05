@@ -18,7 +18,25 @@
           "name": "Left Panel - Brand",
           "width": 640,
           "height": "fill_container",
-          "fill": "#16a34a",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 160,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#16a34a",
+                "position": 0
+              },
+              {
+                "color": "#0d7a34",
+                "position": 1
+              }
+            ]
+          },
           "layout": "vertical",
           "gap": 24,
           "padding": 60,
@@ -40,7 +58,7 @@
                   "fill": "#ffffff",
                   "content": "💪",
                   "fontFamily": "Inter",
-                  "fontSize": 48,
+                  "fontSize": 52,
                   "fontWeight": "700"
                 },
                 {
@@ -61,12 +79,12 @@
               "name": "Tagline",
               "fill": "#ffffff",
               "textGrowth": "fixed-width",
-              "width": 400,
+              "width": 420,
               "content": "Organize sua rotina fitness de forma prática",
+              "lineHeight": 1.6,
               "textAlign": "center",
               "fontFamily": "Inter",
-              "fontSize": 18,
-              "fontWeight": "normal"
+              "fontSize": 18
             },
             {
               "type": "frame",
@@ -192,6 +210,66 @@
                   ]
                 }
               ]
+            },
+            {
+              "type": "ellipse",
+              "id": "M7bRFT",
+              "layoutPosition": "absolute",
+              "x": -80,
+              "y": -60,
+              "name": "Login Decor 1",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#ffffff15",
+                    "position": 0
+                  },
+                  {
+                    "color": "#ffffff00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 300,
+              "height": 300
+            },
+            {
+              "type": "ellipse",
+              "id": "TP5oN",
+              "layoutPosition": "absolute",
+              "x": 400,
+              "y": 500,
+              "name": "Login Decor 2",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#ffffff10",
+                    "position": 0
+                  },
+                  {
+                    "color": "#ffffff00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 250,
+              "height": 250
             }
           ]
         },
@@ -212,16 +290,16 @@
               "name": "Login Card",
               "width": 420,
               "fill": "#ffffff",
-              "cornerRadius": 16,
+              "cornerRadius": 20,
               "effect": {
                 "type": "shadow",
                 "shadowType": "outer",
-                "color": "#0000000a",
+                "color": "#0f1a0f12",
                 "offset": {
                   "x": 0,
-                  "y": 4
+                  "y": 8
                 },
-                "blur": 12
+                "blur": 32
               },
               "layout": "vertical",
               "gap": 24,
@@ -234,18 +312,19 @@
                   "fill": "#0f1a0f",
                   "content": "Bem-vindo ao FitPlanner",
                   "fontFamily": "Inter",
-                  "fontSize": 28,
-                  "fontWeight": "700"
+                  "fontSize": 26,
+                  "fontWeight": "800",
+                  "letterSpacing": -0.3
                 },
                 {
                   "type": "text",
                   "id": "bP396",
                   "name": "Subtitle",
-                  "fill": "#4a5a4a",
+                  "fill": "#6a7a6a",
                   "content": "Digite seu nome para começar sua jornada fitness",
+                  "lineHeight": 1.6,
                   "fontFamily": "Inter",
-                  "fontSize": 16,
-                  "fontWeight": "normal"
+                  "fontSize": 16
                 },
                 {
                   "type": "frame",
@@ -270,12 +349,12 @@
                       "id": "CfnOK",
                       "name": "Input Box",
                       "width": "fill_container",
-                      "fill": "#f0f5f0",
-                      "cornerRadius": 8,
+                      "fill": "#f8faf8",
+                      "cornerRadius": 10,
                       "stroke": "#d0dcd0",
                       "strokeWidth": 1,
                       "padding": [
-                        12,
+                        14,
                         16
                       ],
                       "alignItems": "center",
@@ -284,10 +363,10 @@
                           "type": "text",
                           "id": "hDb9a",
                           "name": "Input Placeholder",
-                          "fill": "#8a9a8a",
+                          "fill": "#a0b0a0",
                           "content": "Ex: Marina",
                           "fontFamily": "Inter",
-                          "fontSize": 16,
+                          "fontSize": 15,
                           "fontWeight": "normal"
                         }
                       ]
@@ -300,9 +379,19 @@
                   "name": "Start Button",
                   "width": "fill_container",
                   "fill": "#16a34a",
-                  "cornerRadius": 8,
+                  "cornerRadius": 12,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#16a34a30",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
                   "padding": [
-                    14,
+                    16,
                     24
                   ],
                   "justifyContent": "center",
@@ -328,8 +417,7 @@
                   "content": "Seus dados ficam salvos apenas no seu dispositivo",
                   "textAlign": "center",
                   "fontFamily": "Inter",
-                  "fontSize": 12,
-                  "fontWeight": "normal"
+                  "fontSize": 12
                 }
               ]
             }
@@ -355,6 +443,10 @@
           "width": 260,
           "height": "fill_container",
           "fill": "#ffffff",
+          "stroke": "#e8f0e8",
+          "strokeWidth": {
+            "right": 1
+          },
           "layout": "vertical",
           "gap": 8,
           "padding": [
@@ -375,14 +467,14 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "text",
-                  "id": "aSMWz",
-                  "name": "Logo Emoji",
-                  "fill": "#16a34a",
-                  "content": "💪",
-                  "fontFamily": "Inter",
-                  "fontSize": 24,
-                  "fontWeight": "normal"
+                  "type": "icon",
+                  "id": "g4Apa",
+                  "name": "Logo Icon",
+                  "width": 24,
+                  "height": 24,
+                  "icon": "dumbbell",
+                  "library": "lucide",
+                  "fill": "#16a34a"
                 },
                 {
                   "type": "text",
@@ -427,14 +519,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "Yjklz",
-                      "name": "Nav Icon",
-                      "fill": "#16a34a",
-                      "content": "📊",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "type": "icon",
+                      "id": "N8O83g",
+                      "name": "Dash Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "layout-dashboard",
+                      "library": "lucide",
+                      "fill": "#16a34a"
                     },
                     {
                       "type": "text",
@@ -463,14 +555,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "tE7nH",
-                      "name": "Nav Icon",
-                      "fill": "#4a5a4a",
-                      "content": "🏋️",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "type": "icon",
+                      "id": "rtS6C",
+                      "name": "Planos Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "dumbbell",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -499,14 +591,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "FPx3l",
-                      "name": "Nav Icon",
-                      "fill": "#4a5a4a",
-                      "content": "🎯",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "type": "icon",
+                      "id": "UiGg3",
+                      "name": "Metas Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "target",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -535,14 +627,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "bqwcP",
-                      "name": "Nav Icon",
-                      "fill": "#4a5a4a",
-                      "content": "📈",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "type": "icon",
+                      "id": "Rxser",
+                      "name": "Evolucao Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "trending-up",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -571,14 +663,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "sExvl",
-                      "name": "Nav Icon",
-                      "fill": "#4a5a4a",
-                      "content": "💡",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "type": "icon",
+                      "id": "Q2pHb",
+                      "name": "Sugestoes Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "lightbulb",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -707,8 +799,9 @@
                       "fill": "#0f1a0f",
                       "content": "Olá, Marina! 👋",
                       "fontFamily": "Inter",
-                      "fontSize": 28,
-                      "fontWeight": "700"
+                      "fontSize": 24,
+                      "fontWeight": "800",
+                      "letterSpacing": -0.5
                     },
                     {
                       "type": "text",
@@ -733,23 +826,33 @@
                       "id": "Erenh",
                       "name": "Add Plan Button",
                       "fill": "#16a34a",
-                      "cornerRadius": 8,
+                      "cornerRadius": 10,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#16a34a25",
+                        "offset": {
+                          "x": 0,
+                          "y": 2
+                        },
+                        "blur": 8
+                      },
                       "gap": 8,
                       "padding": [
                         10,
-                        16
+                        20
                       ],
                       "alignItems": "center",
                       "children": [
                         {
-                          "type": "text",
-                          "id": "ARw5k",
+                          "type": "icon",
+                          "id": "D3Sb6b",
                           "name": "Plus Icon",
-                          "fill": "#ffffff",
-                          "content": "+",
-                          "fontFamily": "Inter",
-                          "fontSize": 16,
-                          "fontWeight": "normal"
+                          "width": 16,
+                          "height": 16,
+                          "icon": "plus",
+                          "library": "lucide",
+                          "fill": "#ffffff"
                         },
                         {
                           "type": "text",
@@ -780,20 +883,20 @@
                   "name": "Stat Card - Treinos esta semana",
                   "width": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 12,
-                  "padding": 20,
+                  "padding": 24,
                   "children": [
                     {
                       "type": "frame",
@@ -826,14 +929,14 @@
                           "alignItems": "center",
                           "children": [
                             {
-                              "type": "text",
-                              "id": "DTLhv",
+                              "type": "icon",
+                              "id": "A0g46",
                               "name": "Stat Icon",
-                              "fill": "#16a34a",
-                              "content": "🏋️",
-                              "fontFamily": "Inter",
-                              "fontSize": 16,
-                              "fontWeight": "normal"
+                              "width": 16,
+                              "height": 16,
+                              "icon": "dumbbell",
+                              "library": "lucide",
+                              "fill": "#16a34a"
                             }
                           ]
                         }
@@ -857,20 +960,20 @@
                   "name": "Stat Card - Meta de peso",
                   "width": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 12,
-                  "padding": 20,
+                  "padding": 24,
                   "children": [
                     {
                       "type": "frame",
@@ -903,14 +1006,14 @@
                           "alignItems": "center",
                           "children": [
                             {
-                              "type": "text",
-                              "id": "taydZ",
+                              "type": "icon",
+                              "id": "h82b1q",
                               "name": "Stat Icon",
-                              "fill": "#2563eb",
-                              "content": "⚖️",
-                              "fontFamily": "Inter",
-                              "fontSize": 16,
-                              "fontWeight": "normal"
+                              "width": 16,
+                              "height": 16,
+                              "icon": "scale",
+                              "library": "lucide",
+                              "fill": "#2563eb"
                             }
                           ]
                         }
@@ -934,20 +1037,20 @@
                   "name": "Stat Card - Horas treinadas",
                   "width": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 12,
-                  "padding": 20,
+                  "padding": 24,
                   "children": [
                     {
                       "type": "frame",
@@ -980,14 +1083,14 @@
                           "alignItems": "center",
                           "children": [
                             {
-                              "type": "text",
-                              "id": "HyNAG",
+                              "type": "icon",
+                              "id": "b77WRR",
                               "name": "Stat Icon",
-                              "fill": "#7c3aed",
-                              "content": "⏱️",
-                              "fontFamily": "Inter",
-                              "fontSize": 16,
-                              "fontWeight": "normal"
+                              "width": 16,
+                              "height": 16,
+                              "icon": "clock",
+                              "library": "lucide",
+                              "fill": "#7c3aed"
                             }
                           ]
                         }
@@ -1011,20 +1114,20 @@
                   "name": "Stat Card - Sequência atual",
                   "width": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 12,
-                  "padding": 20,
+                  "padding": 24,
                   "children": [
                     {
                       "type": "frame",
@@ -1057,14 +1160,14 @@
                           "alignItems": "center",
                           "children": [
                             {
-                              "type": "text",
-                              "id": "QYeU4",
+                              "type": "icon",
+                              "id": "KikPu",
                               "name": "Stat Icon",
-                              "fill": "#ea580c",
-                              "content": "🔥",
-                              "fontFamily": "Inter",
-                              "fontSize": 16,
-                              "fontWeight": "normal"
+                              "width": 16,
+                              "height": 16,
+                              "icon": "flame",
+                              "library": "lucide",
+                              "fill": "#ea580c"
                             }
                           ]
                         }
@@ -1099,20 +1202,20 @@
                   "width": "fill_container",
                   "height": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 16,
-                  "padding": 20,
+                  "padding": 24,
                   "children": [
                     {
                       "type": "text",
@@ -1463,20 +1566,20 @@
                   "width": 380,
                   "height": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 16,
-                  "padding": 20,
+                  "padding": 24,
                   "children": [
                     {
                       "type": "text",
@@ -1743,6 +1846,10 @@
           "width": 260,
           "height": "fill_container",
           "fill": "#ffffff",
+          "stroke": "#e8f0e8",
+          "strokeWidth": {
+            "right": 1
+          },
           "layout": "vertical",
           "gap": 8,
           "padding": [
@@ -1763,14 +1870,14 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "text",
-                  "id": "xoaJA",
-                  "name": "Logo Emoji 2",
-                  "fill": "#16a34a",
-                  "content": "💪",
-                  "fontFamily": "Inter",
-                  "fontSize": 24,
-                  "fontWeight": "normal"
+                  "type": "icon",
+                  "id": "LjfYj",
+                  "name": "Logo Icon 2",
+                  "width": 24,
+                  "height": 24,
+                  "icon": "dumbbell",
+                  "library": "lucide",
+                  "fill": "#16a34a"
                 },
                 {
                   "type": "text",
@@ -1815,14 +1922,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "Vi6iS",
+                      "type": "icon",
+                      "id": "mQJBF",
                       "name": "Nav Icon 2",
-                      "fill": "#4a5a4a",
-                      "content": "📊",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "layout-dashboard",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -1851,14 +1958,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "W9w0A",
+                      "type": "icon",
+                      "id": "iK8dJ",
                       "name": "Nav Icon 2",
-                      "fill": "#16a34a",
-                      "content": "🏋️",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "dumbbell",
+                      "library": "lucide",
+                      "fill": "#16a34a"
                     },
                     {
                       "type": "text",
@@ -1887,14 +1994,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "az7eN",
+                      "type": "icon",
+                      "id": "dzoaT",
                       "name": "Nav Icon 2",
-                      "fill": "#4a5a4a",
-                      "content": "🎯",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "target",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -1923,14 +2030,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "MitW9",
+                      "type": "icon",
+                      "id": "PeZGm",
                       "name": "Nav Icon 2",
-                      "fill": "#4a5a4a",
-                      "content": "📈",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "trending-up",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -1959,14 +2066,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "NvMNc",
+                      "type": "icon",
+                      "id": "Su1ww",
                       "name": "Nav Icon 2",
-                      "fill": "#4a5a4a",
-                      "content": "💡",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "lightbulb",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -2369,17 +2476,19 @@
               "id": "L0Xjt",
               "name": "Table Header",
               "width": "fill_container",
-              "fill": "#ffffff",
+              "fill": "#f8faf8",
               "cornerRadius": [
-                12,
-                12,
+                16,
+                16,
                 0,
                 0
               ],
               "stroke": "#e8f0e8",
-              "strokeWidth": 1,
+              "strokeWidth": {
+                "bottom": 1
+              },
               "padding": [
-                12,
+                14,
                 20
               ],
               "children": [
@@ -2454,11 +2563,21 @@
               "cornerRadius": [
                 0,
                 0,
-                12,
-                12
+                16,
+                16
               ],
               "stroke": "#e8f0e8",
               "strokeWidth": 1,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#0f1a0f08",
+                "offset": {
+                  "x": 0,
+                  "y": 4
+                },
+                "blur": 16
+              },
               "layout": "vertical",
               "children": [
                 {
@@ -3661,6 +3780,10 @@
           "width": 260,
           "height": "fill_container",
           "fill": "#ffffff",
+          "stroke": "#e8f0e8",
+          "strokeWidth": {
+            "right": 1
+          },
           "layout": "vertical",
           "gap": 8,
           "padding": [
@@ -3681,14 +3804,14 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "text",
-                  "id": "sx1gY",
-                  "name": "Logo Emoji 3",
-                  "fill": "#16a34a",
-                  "content": "💪",
-                  "fontFamily": "Inter",
-                  "fontSize": 24,
-                  "fontWeight": "normal"
+                  "type": "icon",
+                  "id": "tBbYB",
+                  "name": "Logo Icon 3",
+                  "width": 24,
+                  "height": 24,
+                  "icon": "dumbbell",
+                  "library": "lucide",
+                  "fill": "#16a34a"
                 },
                 {
                   "type": "text",
@@ -3733,14 +3856,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "utP9I",
+                      "type": "icon",
+                      "id": "JxvVm",
                       "name": "Nav Icon 3",
-                      "fill": "#4a5a4a",
-                      "content": "📊",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "layout-dashboard",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -3769,14 +3892,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "Lo5j8",
+                      "type": "icon",
+                      "id": "zW7bf",
                       "name": "Nav Icon 3",
-                      "fill": "#4a5a4a",
-                      "content": "🏋️",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "dumbbell",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -3805,14 +3928,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "T8Y1d4",
+                      "type": "icon",
+                      "id": "jLi4e",
                       "name": "Nav Icon 3",
-                      "fill": "#16a34a",
-                      "content": "🎯",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "target",
+                      "library": "lucide",
+                      "fill": "#16a34a"
                     },
                     {
                       "type": "text",
@@ -3841,14 +3964,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "Pb6qX",
+                      "type": "icon",
+                      "id": "e2I2XZ",
                       "name": "Nav Icon 3",
-                      "fill": "#4a5a4a",
-                      "content": "📈",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "trending-up",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -3877,14 +4000,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "Y8cJr",
+                      "type": "icon",
+                      "id": "rpXXd",
                       "name": "Nav Icon 3",
-                      "fill": "#4a5a4a",
-                      "content": "💡",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "lightbulb",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -4077,23 +4200,20 @@
                   "id": "QbBKj",
                   "name": "Summary Card",
                   "width": "fill_container",
-                  "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "fill": "$card",
+                  "cornerRadius": 8,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f0a",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 2
                     },
-                    "blur": 3
+                    "blur": 8
                   },
                   "gap": 16,
-                  "padding": [
-                    16,
-                    20
-                  ],
+                  "padding": 20,
                   "alignItems": "center",
                   "children": [
                     {
@@ -4156,23 +4276,20 @@
                   "id": "i38h65",
                   "name": "Summary Card",
                   "width": "fill_container",
-                  "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "fill": "$card",
+                  "cornerRadius": 8,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f0a",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 2
                     },
-                    "blur": 3
+                    "blur": 8
                   },
                   "gap": 16,
-                  "padding": [
-                    16,
-                    20
-                  ],
+                  "padding": 20,
                   "alignItems": "center",
                   "children": [
                     {
@@ -4235,23 +4352,20 @@
                   "id": "Pswy5",
                   "name": "Summary Card",
                   "width": "fill_container",
-                  "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "fill": "$card",
+                  "cornerRadius": 8,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f0a",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 2
                     },
-                    "blur": 3
+                    "blur": 8
                   },
                   "gap": 16,
-                  "padding": [
-                    16,
-                    20
-                  ],
+                  "padding": 20,
                   "alignItems": "center",
                   "children": [
                     {
@@ -4330,12 +4444,12 @@
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 2
+                      "y": 4
                     },
-                    "blur": 6
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 16,
@@ -4695,12 +4809,12 @@
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 2
+                      "y": 4
                     },
-                    "blur": 6
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 16,
@@ -5060,12 +5174,12 @@
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 2
+                      "y": 4
                     },
-                    "blur": 6
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 16,
@@ -5415,6 +5529,10 @@
           "width": 260,
           "height": "fill_container",
           "fill": "#ffffff",
+          "stroke": "#e8f0e8",
+          "strokeWidth": {
+            "right": 1
+          },
           "layout": "vertical",
           "gap": 8,
           "padding": [
@@ -5435,14 +5553,14 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "text",
-                  "id": "ZdHgn",
-                  "name": "Logo Emoji 4",
-                  "fill": "#16a34a",
-                  "content": "💪",
-                  "fontFamily": "Inter",
-                  "fontSize": 24,
-                  "fontWeight": "normal"
+                  "type": "icon",
+                  "id": "K6gZ9",
+                  "name": "Logo Icon 4",
+                  "width": 24,
+                  "height": 24,
+                  "icon": "dumbbell",
+                  "library": "lucide",
+                  "fill": "#16a34a"
                 },
                 {
                   "type": "text",
@@ -5487,14 +5605,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "EHMRA",
+                      "type": "icon",
+                      "id": "dSbIc",
                       "name": "Nav Icon 4",
-                      "fill": "#4a5a4a",
-                      "content": "📊",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "layout-dashboard",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -5523,14 +5641,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "N5xwi",
+                      "type": "icon",
+                      "id": "r7UZDa",
                       "name": "Nav Icon 4",
-                      "fill": "#4a5a4a",
-                      "content": "🏋️",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "dumbbell",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -5559,14 +5677,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "GnULG",
+                      "type": "icon",
+                      "id": "DhyXR",
                       "name": "Nav Icon 4",
-                      "fill": "#4a5a4a",
-                      "content": "🎯",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "target",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -5595,14 +5713,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "hTTUu",
+                      "type": "icon",
+                      "id": "m9u8Sl",
                       "name": "Nav Icon 4",
-                      "fill": "#16a34a",
-                      "content": "📈",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "trending-up",
+                      "library": "lucide",
+                      "fill": "#16a34a"
                     },
                     {
                       "type": "text",
@@ -5631,14 +5749,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "g0uIL",
+                      "type": "icon",
+                      "id": "V6rDJf",
                       "name": "Nav Icon 4",
-                      "fill": "#4a5a4a",
-                      "content": "💡",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "lightbulb",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -5909,20 +6027,20 @@
                   "name": "Stat Card 4 - Total de Treinos",
                   "width": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 8,
-                  "padding": 20,
+                  "padding": 24,
                   "children": [
                     {
                       "type": "frame",
@@ -5996,20 +6114,20 @@
                   "name": "Stat Card 4 - Horas Totais",
                   "width": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 8,
-                  "padding": 20,
+                  "padding": 24,
                   "children": [
                     {
                       "type": "frame",
@@ -6083,20 +6201,20 @@
                   "name": "Stat Card 4 - Frequência Semanal",
                   "width": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 8,
-                  "padding": 20,
+                  "padding": 24,
                   "children": [
                     {
                       "type": "frame",
@@ -6170,20 +6288,20 @@
                   "name": "Stat Card 4 - Sequência Recorde",
                   "width": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 8,
-                  "padding": 20,
+                  "padding": 24,
                   "children": [
                     {
                       "type": "frame",
@@ -6268,16 +6386,16 @@
                   "width": "fill_container",
                   "height": "fill_container",
                   "fill": "#ffffff",
-                  "cornerRadius": 12,
+                  "cornerRadius": 16,
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 1
+                      "y": 4
                     },
-                    "blur": 3
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 16,
@@ -7290,6 +7408,10 @@
           "width": 260,
           "height": "fill_container",
           "fill": "#ffffff",
+          "stroke": "#e8f0e8",
+          "strokeWidth": {
+            "right": 1
+          },
           "layout": "vertical",
           "gap": 8,
           "padding": [
@@ -7310,14 +7432,14 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "text",
-                  "id": "dIUOF",
-                  "name": "Logo Emoji 5",
-                  "fill": "#16a34a",
-                  "content": "💪",
-                  "fontFamily": "Inter",
-                  "fontSize": 24,
-                  "fontWeight": "normal"
+                  "type": "icon",
+                  "id": "KKBnD",
+                  "name": "Logo Icon 5",
+                  "width": 24,
+                  "height": 24,
+                  "icon": "dumbbell",
+                  "library": "lucide",
+                  "fill": "#16a34a"
                 },
                 {
                   "type": "text",
@@ -7362,14 +7484,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "A7Bisr",
+                      "type": "icon",
+                      "id": "P9CZDS",
                       "name": "Nav Icon 5",
-                      "fill": "#4a5a4a",
-                      "content": "📊",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "layout-dashboard",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -7398,14 +7520,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "hnBzF",
+                      "type": "icon",
+                      "id": "SXDNM",
                       "name": "Nav Icon 5",
-                      "fill": "#4a5a4a",
-                      "content": "🏋️",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "dumbbell",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -7434,14 +7556,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "ET1YN",
+                      "type": "icon",
+                      "id": "SuKRi",
                       "name": "Nav Icon 5",
-                      "fill": "#4a5a4a",
-                      "content": "🎯",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "target",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -7470,14 +7592,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "f22wl",
+                      "type": "icon",
+                      "id": "MFXaR",
                       "name": "Nav Icon 5",
-                      "fill": "#4a5a4a",
-                      "content": "📈",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "trending-up",
+                      "library": "lucide",
+                      "fill": "#4a5a4a"
                     },
                     {
                       "type": "text",
@@ -7506,14 +7628,14 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "Vvwk3",
+                      "type": "icon",
+                      "id": "jXunr",
                       "name": "Nav Icon 5",
-                      "fill": "#16a34a",
-                      "content": "💡",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "normal"
+                      "width": 18,
+                      "height": 18,
+                      "icon": "lightbulb",
+                      "library": "lucide",
+                      "fill": "#16a34a"
                     },
                     {
                       "type": "text",
@@ -7715,12 +7837,12 @@
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
-                    "color": "#0000000a",
+                    "color": "#0f1a0f08",
                     "offset": {
                       "x": 0,
-                      "y": 2
+                      "y": 4
                     },
-                    "blur": 6
+                    "blur": 16
                   },
                   "layout": "vertical",
                   "gap": 16,
@@ -9135,7 +9257,7 @@
       "name": "FitPlanner - Landing Page",
       "clip": true,
       "width": 1440,
-      "height": 900,
+      "height": 1920,
       "fill": "$background",
       "layout": "vertical",
       "children": [
@@ -9145,6 +9267,10 @@
           "name": "Nav Bar",
           "width": "fill_container",
           "height": 70,
+          "stroke": "#e8f0e8",
+          "strokeWidth": {
+            "bottom": 1
+          },
           "padding": [
             16,
             48
@@ -9159,14 +9285,14 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "text",
-                  "id": "AuTO6",
-                  "name": "Logo Emoji",
-                  "fill": "#16a34a",
-                  "content": "💪",
-                  "fontFamily": "Inter",
-                  "fontSize": 28,
-                  "fontWeight": "normal"
+                  "type": "icon",
+                  "id": "N0mG2",
+                  "name": "Logo Icon",
+                  "width": 28,
+                  "height": 28,
+                  "icon": "dumbbell",
+                  "library": "lucide",
+                  "fill": "#16a34a"
                 },
                 {
                   "type": "text",
@@ -9192,10 +9318,20 @@
               "id": "TFzC6",
               "name": "Nav CTA Button",
               "fill": "#16a34a",
-              "cornerRadius": 8,
+              "cornerRadius": 10,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#16a34a30",
+                "offset": {
+                  "x": 0,
+                  "y": 2
+                },
+                "blur": 8
+              },
               "padding": [
                 10,
-                24
+                28
               ],
               "justifyContent": "center",
               "alignItems": "center",
@@ -9218,26 +9354,45 @@
           "type": "frame",
           "id": "BEI7K",
           "name": "Hero Section",
+          "clip": true,
           "width": "fill_container",
-          "height": "fill_container",
+          "height": 580,
+          "fill": "$background",
           "layout": "vertical",
           "gap": 24,
           "padding": [
-            40,
+            60,
+            120,
+            50,
             120
           ],
           "justifyContent": "center",
           "alignItems": "center",
           "children": [
             {
-              "type": "text",
-              "id": "F51oL8",
-              "name": "Hero Badge",
-              "fill": "#16a34a",
-              "content": "🏋️ Sua jornada fitness começa aqui",
-              "fontFamily": "Inter",
-              "fontSize": 14,
-              "fontWeight": "500"
+              "type": "frame",
+              "id": "r8Wrol",
+              "name": "Hero Badge Pill",
+              "fill": "#e8f5e8",
+              "cornerRadius": 24,
+              "padding": [
+                8,
+                18
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "zygAT",
+                  "name": "Badge Text",
+                  "fill": "#16a34a",
+                  "content": "🏋️  Sua jornada fitness começa aqui",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
             },
             {
               "type": "text",
@@ -9247,25 +9402,25 @@
               "textGrowth": "fixed-width",
               "width": "fill_container",
               "content": "Transforme sua rotina de treinos",
+              "lineHeight": 1.1,
               "textAlign": "center",
               "fontFamily": "Inter",
               "fontSize": 56,
-              "fontWeight": "700",
-              "letterSpacing": -1.5
+              "fontWeight": "800",
+              "letterSpacing": -2
             },
             {
               "type": "text",
               "id": "gl9yq",
               "name": "Hero Subtitle",
-              "fill": "#4a5a4a",
+              "fill": "#5a6a5a",
               "textGrowth": "fixed-width",
               "width": 600,
               "content": "Planeje seus treinos, acompanhe sua evolução e alcance suas metas com recomendações inteligentes.",
-              "lineHeight": 1.6,
+              "lineHeight": 1.7,
               "textAlign": "center",
               "fontFamily": "Inter",
-              "fontSize": 18,
-              "fontWeight": "normal"
+              "fontSize": 18
             },
             {
               "type": "frame",
@@ -9283,10 +9438,20 @@
                   "id": "fMmEW",
                   "name": "Primary CTA",
                   "fill": "#16a34a",
-                  "cornerRadius": 10,
+                  "cornerRadius": 12,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#16a34a40",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 12
+                  },
                   "padding": [
-                    14,
-                    32
+                    16,
+                    36
                   ],
                   "justifyContent": "center",
                   "alignItems": "center",
@@ -9308,12 +9473,12 @@
                   "id": "Qw7qO",
                   "name": "Secondary CTA",
                   "fill": "#ffffff",
-                  "cornerRadius": 10,
-                  "stroke": "#d0dcd0",
-                  "strokeWidth": 1,
+                  "cornerRadius": 12,
+                  "stroke": "#c0d0c0",
+                  "strokeWidth": 1.5,
                   "padding": [
-                    14,
-                    32
+                    16,
+                    36
                   ],
                   "justifyContent": "center",
                   "alignItems": "center",
@@ -9331,6 +9496,576 @@
                   ]
                 }
               ]
+            },
+            {
+              "type": "ellipse",
+              "id": "WDN2m",
+              "layoutPosition": "absolute",
+              "x": 820,
+              "y": -50,
+              "name": "Hero Decor 1",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#16a34a18",
+                    "position": 0
+                  },
+                  {
+                    "color": "#16a34a00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 600,
+              "height": 600
+            },
+            {
+              "type": "ellipse",
+              "id": "skG5q",
+              "layoutPosition": "absolute",
+              "x": 100,
+              "y": 200,
+              "name": "Hero Decor 2",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#16a34a10",
+                    "position": 0
+                  },
+                  {
+                    "color": "#16a34a00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 400,
+              "height": 400
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "hBfJ0",
+          "name": "Features Section",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": [
+            60,
+            80
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "nt4bn",
+              "name": "Section Header",
+              "width": 600,
+              "layout": "vertical",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kKaWe",
+                  "name": "Section Overline",
+                  "fill": "#16a34a",
+                  "content": "RECURSOS",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "700",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "F5FoAd",
+                  "name": "Section Title",
+                  "fill": "#0f1a0f",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Tudo que você precisa para sua jornada fitness",
+                  "lineHeight": 1.2,
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 32,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "RfRAR",
+                  "name": "Section Subtitle",
+                  "fill": "#5a6a5a",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Ferramentas pensadas para facilitar seu dia a dia e acelerar seus resultados.",
+                  "lineHeight": 1.6,
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 16
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "lphFV",
+              "name": "Features Row",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "MgHIP",
+                  "name": "Feature Card 1",
+                  "width": "fill_container",
+                  "fill": "#ffffff",
+                  "cornerRadius": 16,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#0f1a0f0a",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "HtM9n",
+                      "name": "Icon Circle",
+                      "width": 48,
+                      "height": 48,
+                      "fill": "#e8f5e8",
+                      "cornerRadius": 14,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "R9kCIV",
+                          "name": "Plan Icon",
+                          "width": 24,
+                          "height": 24,
+                          "icon": "clipboard-list",
+                          "library": "lucide",
+                          "fill": "#16a34a"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "A7v9L",
+                      "name": "Card Title 1",
+                      "fill": "#0f1a0f",
+                      "content": "Planejamento Inteligente",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "HfNLi",
+                      "name": "Card Desc 1",
+                      "fill": "#5a6a5a",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Crie planos de treino personalizados, adaptados ao seu nível e objetivos com recomendações automáticas.",
+                      "lineHeight": 1.7,
+                      "fontFamily": "Inter",
+                      "fontSize": 14
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hX2E3",
+                  "name": "Feature Card 2",
+                  "width": "fill_container",
+                  "fill": "#ffffff",
+                  "cornerRadius": 16,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#0f1a0f0a",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Q0Zsgk",
+                      "name": "Icon Circle",
+                      "width": 48,
+                      "height": 48,
+                      "fill": "#e8f5e8",
+                      "cornerRadius": 14,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "qWZMM",
+                          "name": "Track Icon",
+                          "width": 24,
+                          "height": 24,
+                          "icon": "trending-up",
+                          "library": "lucide",
+                          "fill": "#16a34a"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "AHPq1",
+                      "name": "Card Title 2",
+                      "fill": "#0f1a0f",
+                      "content": "Acompanhamento de Evolução",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "sITgp",
+                      "name": "Card Desc 2",
+                      "fill": "#5a6a5a",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Visualize seu progresso com gráficos detalhados e acompanhe cada conquista ao longo do tempo.",
+                      "lineHeight": 1.7,
+                      "fontFamily": "Inter",
+                      "fontSize": 14
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "gYbjH",
+                  "name": "Feature Card 3",
+                  "width": "fill_container",
+                  "fill": "#ffffff",
+                  "cornerRadius": 16,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#0f1a0f0a",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 28,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "l0zKnB",
+                      "name": "Icon Circle",
+                      "width": 48,
+                      "height": 48,
+                      "fill": "#e8f5e8",
+                      "cornerRadius": 14,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "gBnfS",
+                          "name": "Goal Icon",
+                          "width": 24,
+                          "height": 24,
+                          "icon": "target",
+                          "library": "lucide",
+                          "fill": "#16a34a"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "vC9ZM",
+                      "name": "Card Title 3",
+                      "fill": "#0f1a0f",
+                      "content": "Metas Personalizadas",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Hlc7I",
+                      "name": "Card Desc 3",
+                      "fill": "#5a6a5a",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Defina objetivos claros e acompanhe de perto cada meta com sugestões inteligentes para atingi-las.",
+                      "lineHeight": 1.7,
+                      "fontFamily": "Inter",
+                      "fontSize": 14
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "pnGpZ",
+          "name": "Social Proof Section",
+          "width": "fill_container",
+          "gap": 80,
+          "padding": [
+            40,
+            80
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "BVazo",
+              "name": "Stat 1",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "S3BkVh",
+                  "name": "Stat Number 1",
+                  "fill": "#16a34a",
+                  "content": "10k+",
+                  "fontFamily": "Inter",
+                  "fontSize": 36,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "WRpEm",
+                  "name": "Stat Label 1",
+                  "fill": "#5a6a5a",
+                  "content": "Atletas ativos",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "XXfoU",
+              "name": "Stat 2",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QEoRd",
+                  "name": "Stat Number 2",
+                  "fill": "#16a34a",
+                  "content": "50k+",
+                  "fontFamily": "Inter",
+                  "fontSize": 36,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "t5LxA5",
+                  "name": "Stat Label 2",
+                  "fill": "#5a6a5a",
+                  "content": "Treinos realizados",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "TqDC7",
+              "name": "Stat 3",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Q1BzB",
+                  "name": "Stat Number 3",
+                  "fill": "#16a34a",
+                  "content": "98%",
+                  "fontFamily": "Inter",
+                  "fontSize": 36,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "Qw26V",
+                  "name": "Stat Label 3",
+                  "fill": "#5a6a5a",
+                  "content": "Satisfação",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "WrtZg",
+          "name": "Section Divider",
+          "width": "fill_container",
+          "height": 1,
+          "fill": "#e0e8e0"
+        },
+        {
+          "type": "frame",
+          "id": "PxkHc",
+          "name": "CTA Section",
+          "width": "fill_container",
+          "padding": [
+            60,
+            80
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "ediOw",
+              "name": "CTA Background",
+              "width": "fill_container",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 135,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#16a34a",
+                    "position": 0
+                  },
+                  {
+                    "color": "#0d7a34",
+                    "position": 1
+                  }
+                ]
+              },
+              "cornerRadius": 24,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#16a34a30",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 32
+              },
+              "layout": "vertical",
+              "gap": 20,
+              "padding": [
+                56,
+                80
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "V9JK79",
+                  "name": "CTA Title",
+                  "fill": "#ffffff",
+                  "content": "Comece sua transformação hoje",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 36,
+                  "fontWeight": "800",
+                  "letterSpacing": -0.5
+                },
+                {
+                  "type": "text",
+                  "id": "VPNcE",
+                  "name": "CTA Subtitle",
+                  "fill": "#ffffff99",
+                  "textGrowth": "fixed-width",
+                  "width": 560,
+                  "content": "Junte-se a milhares de atletas que já transformaram sua rotina com o FitPlanner.",
+                  "lineHeight": 1.6,
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18
+                },
+                {
+                  "type": "frame",
+                  "id": "wGwtv",
+                  "name": "CTA Button",
+                  "fill": "#ffffff",
+                  "cornerRadius": 12,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#00000020",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 16
+                  },
+                  "padding": [
+                    16,
+                    40
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nf4wN",
+                      "name": "CTA Button Text",
+                      "fill": "#16a34a",
+                      "content": "Começar Agora — É Grátis",
+                      "fontFamily": "Inter",
+                      "fontSize": 17,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -9339,9 +10074,17 @@
           "id": "Uz9P1",
           "name": "Footer",
           "width": "fill_container",
+          "stroke": "#e0e8e0",
+          "strokeWidth": {
+            "top": 1
+          },
+          "layout": "vertical",
+          "gap": 24,
           "padding": [
-            24,
-            48
+            40,
+            80,
+            32,
+            80
           ],
           "justifyContent": "center",
           "alignItems": "center",
@@ -9350,11 +10093,137 @@
               "type": "text",
               "id": "U3JDl",
               "name": "Footer Text",
-              "fill": "#6a7a6a",
+              "fill": "#8a9a8a",
               "content": "© 2026 FitPlanner. Todos os direitos reservados.",
               "fontFamily": "Inter",
-              "fontSize": 13,
-              "fontWeight": "normal"
+              "fontSize": 13
+            },
+            {
+              "type": "frame",
+              "id": "bfF9k",
+              "name": "Footer Content",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "G5mGhv",
+                  "name": "Footer Logo",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "q3fi8",
+                      "name": "Footer Logo Icon",
+                      "fill": "#16a34a",
+                      "content": "💪",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "t8p4cC",
+                      "name": "Footer Logo Text",
+                      "fill": "#0f1a0f",
+                      "content": "FitPlanner",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "l1xEF",
+                  "name": "Footer Links",
+                  "gap": 24,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "qlq4S",
+                      "name": "Footer Link",
+                      "fill": "#5a6a5a",
+                      "content": "Recursos",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "EuJfh",
+                      "name": "Footer Link",
+                      "fill": "#5a6a5a",
+                      "content": "Suporte",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rKBp3",
+                      "name": "Footer Link",
+                      "fill": "#5a6a5a",
+                      "content": "Privacidade",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "WXX9W",
+                      "name": "Footer Link",
+                      "fill": "#5a6a5a",
+                      "content": "Termos",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "yDrX8",
+                  "name": "Footer Right",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "uF7B7",
+                      "name": "Social Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "twitter",
+                      "library": "lucide",
+                      "fill": "#6a7a6a"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "WUFes",
+                      "name": "Social Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "instagram",
+                      "library": "lucide",
+                      "fill": "#6a7a6a"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "ZOfub",
+                      "name": "Social Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "youtube",
+                      "library": "lucide",
+                      "fill": "#6a7a6a"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
