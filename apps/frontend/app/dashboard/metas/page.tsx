@@ -1,10 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircle, Pencil, Plus, Target, Trash2 } from "lucide-react";
+import { LoaderCircle, Plus, Target, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 import useAuth, { type Meta } from "@/app/login/auth-context";
 import { ConfirmDialog } from "@/components/confirm-dialog";
@@ -24,32 +23,20 @@ import { Label } from "@/components/ui/label";
 const metaSchema = z.object({
 	descricao: z
 		.string()
-		.min(1, "A descricao e obrigatoria.")
-		.max(128, "A descricao pode ter no maximo 128 caracteres."),
+		.min(1, "A descrição é obrigatória.")
+		.max(128, "A descrição pode ter no máximo 128 caracteres."),
 	prazo: z.string(),
 	status: z.string(),
 });
 
 type MetaFormData = z.infer<typeof metaSchema>;
 
-const statusColors: Record<string, string> = {
-	"Em andamento": "bg-blue-50 text-blue-700 border-blue-200",
-	Concluida: "bg-green-50 text-green-700 border-green-200",
-	Pendente: "bg-amber-50 text-amber-700 border-amber-200",
-};
-
-const statusOptions = [
-	{ value: "Em andamento", label: "Em andamento" },
-	{ value: "Concluida", label: "Concluida" },
-	{ value: "Pendente", label: "Pendente" },
-];
-
 function CreateMetaDialog({ onCreated }: { onCreated: () => void }) {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const { createMeta } = useAuth();
 	const { control, handleSubmit, reset } = useForm<MetaFormData>({
-		resolver: zodResolver(metaSchema as never),
+		resolver: zodResolver(metaSchema as any),
 		defaultValues: {
 			descricao: "",
 			prazo: "",
@@ -63,13 +50,13 @@ function CreateMetaDialog({ onCreated }: { onCreated: () => void }) {
 			await createMeta({
 				descricao: data.descricao,
 				prazo: data.prazo ? Number(data.prazo) : null,
-				status: data.status || undefined,
+				status: data.status || null,
 			});
 			reset();
 			setOpen(false);
 			onCreated();
 		} catch (err) {
-			toast.error(err instanceof Error ? err.message : "Ocorreu um erro");
+			console.error(err);
 		} finally {
 			setLoading(false);
 		}
@@ -91,7 +78,7 @@ function CreateMetaDialog({ onCreated }: { onCreated: () => void }) {
 			</DialogTrigger>
 			<DialogContent>
 				<DialogTitle>Nova Meta</DialogTitle>
-				<DialogDescription>Defina um objetivo para alcancar</DialogDescription>
+				<DialogDescription>Defina um objetivo para alcançar</DialogDescription>
 				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
 					<div className="flex flex-col gap-1.5">
 						<Controller
@@ -99,7 +86,7 @@ function CreateMetaDialog({ onCreated }: { onCreated: () => void }) {
 							control={control}
 							render={({ field, fieldState }) => (
 								<>
-									<Label htmlFor="descricao">Descricao *</Label>
+									<Label htmlFor="descricao">Descrição *</Label>
 									<Input
 										id="descricao"
 										placeholder="Ex: Perder 5kg"
@@ -142,11 +129,9 @@ function CreateMetaDialog({ onCreated }: { onCreated: () => void }) {
 										onChange={field.onChange}
 										className="flex h-9 w-full rounded-lg border border-[#e8f0e8] bg-white px-3 text-sm text-[#0f1a0f] outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20"
 									>
-										{statusOptions.map((opt) => (
-											<option key={opt.value} value={opt.value}>
-												{opt.label}
-											</option>
-										))}
+										<option value="Em andamento">Em andamento</option>
+										<option value="Concluída">Concluída</option>
+										<option value="Pendente">Pendente</option>
 									</select>
 								</>
 							)}
@@ -162,133 +147,11 @@ function CreateMetaDialog({ onCreated }: { onCreated: () => void }) {
 	);
 }
 
-function EditMetaDialog({
-	meta,
-	index,
-	onUpdated,
-}: {
-	meta: Meta;
-	index: number;
-	onUpdated: () => void;
-}) {
-	const [open, setOpen] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const { updateMeta } = useAuth();
-	const { control, handleSubmit, reset } = useForm<MetaFormData>({
-		resolver: zodResolver(metaSchema as never),
-		defaultValues: {
-			descricao: meta.descricao,
-			prazo: meta.prazo != null ? String(meta.prazo) : "",
-			status: meta.status || "Em andamento",
-		},
-	});
-
-	useEffect(() => {
-		if (open) {
-			reset({
-				descricao: meta.descricao,
-				prazo: meta.prazo != null ? String(meta.prazo) : "",
-				status: meta.status || "Em andamento",
-			});
-		}
-	}, [open, meta, reset]);
-
-	async function onSubmit(data: MetaFormData) {
-		setLoading(true);
-		try {
-			await updateMeta(index, {
-				descricao: data.descricao || undefined,
-				prazo: data.prazo ? Number(data.prazo) : null,
-				status: data.status || undefined,
-			});
-			setOpen(false);
-			onUpdated();
-		} catch (err) {
-			toast.error(err instanceof Error ? err.message : "Ocorreu um erro");
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	return (
-		<Dialog
-			open={open}
-			onOpenChange={(v) => {
-				setOpen(v);
-				if (!v) reset();
-			}}
-		>
-			<DialogTrigger asChild>
-				<Button
-					variant="ghost"
-					size="icon-sm"
-					className="text-blue-500 hover:bg-blue-50 hover:text-blue-600"
-				>
-					<Pencil className="size-4" />
-				</Button>
-			</DialogTrigger>
-			<DialogContent>
-				<DialogTitle>Editar Meta</DialogTitle>
-				<DialogDescription>Atualize os dados da meta</DialogDescription>
-				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-					<div className="flex flex-col gap-1.5">
-						<Controller
-							name="descricao"
-							control={control}
-							render={({ field, fieldState }) => (
-								<>
-									<Label>Descricao *</Label>
-									<Input placeholder="Ex: Perder 5kg" {...field} />
-									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
-									)}
-								</>
-							)}
-						/>
-					</div>
-					<div className="flex flex-col gap-1.5">
-						<Controller
-							name="prazo"
-							control={control}
-							render={({ field }) => (
-								<>
-									<Label>Prazo (dias)</Label>
-									<Input type="number" placeholder="Ex: 30" {...field} />
-								</>
-							)}
-						/>
-					</div>
-					<div className="flex flex-col gap-1.5">
-						<Controller
-							name="status"
-							control={control}
-							render={({ field }) => (
-								<>
-									<Label>Status</Label>
-									<select
-										value={field.value}
-										onChange={field.onChange}
-										className="flex h-9 w-full rounded-lg border border-[#e8f0e8] bg-white px-3 text-sm text-[#0f1a0f] outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20"
-									>
-										{statusOptions.map((opt) => (
-											<option key={opt.value} value={opt.value}>
-												{opt.label}
-											</option>
-										))}
-									</select>
-								</>
-							)}
-						/>
-					</div>
-					<Button type="submit" disabled={loading} className="mt-2 gap-1.5">
-						{loading && <LoaderCircle className="size-4 animate-spin" />}
-						{loading ? "Salvando..." : "Salvar"}
-					</Button>
-				</form>
-			</DialogContent>
-		</Dialog>
-	);
-}
+const statusColors: Record<string, string> = {
+	"Em andamento": "bg-blue-50 text-blue-700 border-blue-200",
+	Concluída: "bg-green-50 text-green-700 border-green-200",
+	Pendente: "bg-amber-50 text-amber-700 border-amber-200",
+};
 
 export default function MetasPage() {
 	const { user, isLoading, fetchMetas, deleteMeta } = useAuth();
@@ -302,13 +165,13 @@ export default function MetasPage() {
 			const data = await fetchMetas();
 			setMetas(data);
 		} catch (err) {
-			toast.error(err instanceof Error ? err.message : "Ocorreu um erro");
+			console.error(err);
 		} finally {
 			setLoading(false);
 		}
 	}
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: false positive
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (user) loadData();
 	}, [user]);
@@ -339,7 +202,7 @@ export default function MetasPage() {
 					if (!open) setDeleteIndex(null);
 				}}
 				title="Excluir meta?"
-				description="Essa acao nao pode ser desfeita."
+				description="Essa ação não pode ser desfeita."
 				onConfirm={handleConfirmDelete}
 			/>
 
@@ -354,7 +217,7 @@ export default function MetasPage() {
 			</div>
 
 			<div className="mb-6 flex gap-2">
-				{["Todas", "Em andamento", "Concluida", "Pendente"].map((s) => (
+				{["Todas", "Em andamento", "Concluída", "Pendente"].map((s) => (
 					<button
 						key={s}
 						type="button"
@@ -375,7 +238,7 @@ export default function MetasPage() {
 					<Target className="size-12 text-[#4a5a4a]/30" />
 					<p className="mt-4 text-[#4a5a4a]">Nenhuma meta cadastrada</p>
 					<p className="text-sm text-[#8a9a8a]">
-						Clique em "Nova Meta" para comecar
+						Clique em "Nova Meta" para começar
 					</p>
 				</div>
 			) : (
@@ -406,11 +269,6 @@ export default function MetasPage() {
 									<Badge className={`${colorClass} border`}>
 										{meta.status ?? "Pendente"}
 									</Badge>
-									<EditMetaDialog
-										meta={meta}
-										index={realIndex}
-										onUpdated={loadData}
-									/>
 									<Button
 										variant="ghost"
 										size="icon-sm"

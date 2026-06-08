@@ -1,20 +1,30 @@
 {
-	"$schema": "https://opencode.ai/config.json",
-	"mcp": {
-		"shadcn": {
-			"type": "local",
-			"command": ["bunx", "shadcn@latest", "mcp"],
-			"enabled": true
-		},
-		"nextjs-docs-mcp": {
-			"type": "local",
-			"command": ["bunx", "@taiyokimura/nextjs-docs-mcp@latest"],
-			"enabled": true
-		},
-		"tailwindcss": {
-			"type": "local",
-			"command": ["npx", "tailwindcss-mcp-server"],
-			"enabled": true
-		}
-	}
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "shadcn": {
+      "type": "local",
+      "command": [
+        "bunx",
+        "shadcn@latest",
+        "mcp"
+      ],
+      "enabled": true
+    },
+    "nextjs-docs-mcp": {
+      "type": "local",
+      "command": [
+        "bunx",
+        "@taiyokimura/nextjs-docs-mcp@latest"
+      ],
+      "enabled": true
+    },
+    "tailwindcss": {
+      "type": "local",
+      "command": [
+        "npx",
+        "tailwindcss-mcp-server"
+      ],
+      "enabled": true
+    }
+  }
 }
