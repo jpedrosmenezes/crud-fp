@@ -252,16 +252,16 @@ async def post_treino(usuario: str, data: dict = Body(...)):
     if not data.get("nome"):
         raise HTTPException(status_code=400, detail="Nome obrigatório")
     treinos = load_treinos(usuario)
-    treinos.append(
-        {
-            "nome": data.get("nome", ""),
-            "tipo": data.get("tipo", ""),
-            "data": data.get("data", ""),
-            "duracao": data.get("duracao", ""),
-            "objetivo": data.get("objetivo", ""),
-            "meta": data.get("meta", ""),
-        }
-    )
+    if any(t["nome"].lower() == data["nome"].lower() for t in treinos):
+        raise HTTPException(status_code=409, detail="Já existe um treino com esse nome")
+    treinos.append({
+        "nome":     data.get("nome", ""),
+        "tipo":     data.get("tipo", ""),
+        "data":     data.get("data", ""),
+        "duracao":  data.get("duracao", ""),
+        "objetivo": data.get("objetivo", ""),
+        "meta":     data.get("meta", "")
+    })
     save_treinos(usuario, treinos)
     return {"ok": True}
 
@@ -313,17 +313,21 @@ async def post_exercicios(usuario: str, data: dict = Body(...)):
     if not data.get("nome"):
         raise HTTPException(status_code=400, detail="Nome obrigatório")
     exercicios = load_exercicios(usuario)
-    exercicios.append(
-        {
-            "nome": data.get("nome", ""),
-            "treino": data.get("treino", ""),
-            "modo": data.get("modo", "series"),
-            "series": str(data.get("series", 0)),
-            "repeticoes": str(data.get("repeticoes", 0)),
-            "tempo": str(data.get("tempo", 0)),
-            "distancia": str(data.get("distancia", 0)),
-        }
-    )
+    if any(
+        e["nome"].lower() == data["nome"].lower() and
+        e["treinos"].lower() == data.get["treinos", ""].lower()
+        for e in exercicios
+    ):
+        raise HTTPException(status_code=409, detail="Já existe um exercício com esse nome nesse treino")
+    exercicios.append({
+        "nome":       data.get("nome", ""),
+        "treino":     data.get("treino", ""),
+        "modo":       data.get("modo", "series"),
+        "series":     str(data.get("series", 0)),
+        "repeticoes": str(data.get("repeticoes", 0)),
+        "tempo":      str(data.get("tempo", 0)),
+        "distancia":  str(data.get("distancia", 0))
+    })
     save_exercicios(usuario, exercicios)
     return {"ok": True}
 
@@ -373,13 +377,13 @@ async def post_metas(usuario: str, data: dict = Body(...)):
     if not data.get("descricao"):
         raise HTTPException(status_code=400, detail="Descrição obrigatória")
     metas = load_metas(usuario)
-    metas.append(
-        {
-            "descricao": data.get("descricao", ""),
-            "prazo": data.get("prazo", ""),
-            "status": data.get("status", "Em andamento"),
-        }
-    )
+    if any(m["descricao"].lower() == data["descricao"].lower() for m in metas):
+        raise HTTPException(status_code=409, detail="Já existe uma meta com essa descrição")
+    metas.append({
+        "descricao": data.get("descricao", ""),
+        "prazo":     data.get("prazo", ""),
+        "status":    data.get("status", "Em andamento")
+    })
     save_metas(usuario, metas)
     return {"ok": True}
 
@@ -421,14 +425,14 @@ async def post_evolucoes(usuario: str, data: dict = Body(...)):
     if not data.get("data"):
         raise HTTPException(status_code=400, detail="Data obrigatória")
     evolucoes = load_evolucoes(usuario)
-    evolucoes.append(
-        {
-            "data": data.get("data", ""),
-            "peso": data.get("peso", ""),
-            "altura": data.get("altura", ""),
-            "gordura": data.get("gordura", ""),
-        }
-    )
+    if any(e["data"] == data["data"] for e in evolucoes):
+        raise HTTPException(status_code=409, detail="Já existe um registro de evolução nessa data")
+    evolucoes.append({
+        "data":    data.get("data", ""),
+        "peso":    data.get("peso", ""),
+        "altura":  data.get("altura", ""),
+        "gordura": data.get("gordura", "")
+    })
     save_evolucoes(usuario, evolucoes)
     return {"ok": True}
 
