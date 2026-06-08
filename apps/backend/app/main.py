@@ -4,6 +4,7 @@ from fastapi.openapi.utils import get_openapi
 import os
 import datetime as dt
 from dotenv import load_dotenv
+import random
 
 load_dotenv(
     dotenv_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env")
@@ -461,44 +462,112 @@ async def delete_evolucoes(usuario: str, index: int):
     save_evolucoes(usuario, evolucoes)
     return {"ok": True}
 
-
 # SUGESTOES
-def sugest(usuario: str, objetivo_usuario=None):
-    sugestoes = {
-        "Hipertrofia": {
+SUGESTOES_PADRAO = {
+    "Hipertrofia": [
+        {
             "nome": "Sugestão: peito e tríceps",
             "tipo": "Musculação",
-            "data": dt.date.today().strftime("%d/%m/%Y"),
+            "data": "",
             "duracao": "60 min",
             "objetivo": "Hipertrofia",
-            "meta": "Ganho de massa magra",
+            "meta": "Ganho de massa magra"
         },
-        "Emagrecimento": {
+        {
+            "nome": "Sugestão: costas e bíceps",
+            "tipo": "Musculação",
+            "data": "",
+            "duracao": "60 min",
+            "objetivo": "Hipertrofia",
+            "meta": "Ganho de massa magra"
+        },
+        {
+            "nome": "Sugestão: pernas completas",
+            "tipo": "Musculação",
+            "data": "",
+            "duracao": "75 min",
+            "objetivo": "Hipertrofia",
+            "meta": "Ganho de massa magra"
+        },
+        {
+            "nome": "Sugestão: ombros e trapézio",
+            "tipo": "Musculação",
+            "data": "",
+            "duracao": "50 min",
+            "objetivo": "Hipertrofia",
+            "meta": "Desenvolvimento muscular"
+        },
+        {
+            "nome": "Sugestão: full body intenso",
+            "tipo": "Musculação",
+            "data": "",
+            "duracao": "70 min",
+            "objetivo": "Hipertrofia",
+            "meta": "Aumento de massa muscular"
+        }
+    ],
+
+    "Emagrecimento": [
+        {
             "nome": "Sugestão: corrida",
             "tipo": "Cardio / Funcional",
-            "data": dt.date.today().strftime("%d/%m/%Y"),
+            "data": "",
             "duracao": "45 min",
             "objetivo": "Emagrecimento",
-            "meta": "Déficit calórico",
+            "meta": "Déficit calórico"
         },
-    }
+        {
+            "nome": "Sugestão: caminhada acelerada",
+            "tipo": "Cardio",
+            "data": "",
+            "duracao": "60 min",
+            "objetivo": "Emagrecimento",
+            "meta": "Queima de gordura"
+        },
+        {
+            "nome": "Sugestão: HIIT",
+            "tipo": "Funcional",
+            "data": "",
+            "duracao": "30 min",
+            "objetivo": "Emagrecimento",
+            "meta": "Alto gasto calórico"
+        },
+        {
+            "nome": "Sugestão: bicicleta ergométrica",
+            "tipo": "Cardio",
+            "data": "",
+            "duracao": "50 min",
+            "objetivo": "Emagrecimento",
+            "meta": "Melhora cardiovascular"
+        },
+        {
+            "nome": "Sugestão: circuito funcional",
+            "tipo": "Funcional",
+            "data": "",
+            "duracao": "40 min",
+            "objetivo": "Emagrecimento",
+            "meta": "Redução de gordura corporal"
+        }
+    ]
+}
 
+def loaded_sugestoes(usuario: str, objetivo: str = None):
     lista_treinos = load_treinos(usuario)
 
     if lista_treinos:
         return {"origem": "arquivo", "dados": lista_treinos}
 
-    if objetivo_usuario in sugestoes:
-        return {"origem": "sugestao", "dados": [sugestoes[objetivo_usuario]]}
+    if objetivo in SUGESTOES_PADRAO:
+        sugestao = random.choice(SUGESTOES_PADRAO[objetivo]).copy()
+        sugestao["data"] = dt.date.today().strftime("%d/%m/%Y")
+        return {"origem": "sugestao", "dados": [sugestao]}
 
     return {"origem": "nenhum", "dados": []}
-
 
 @app.get("/sugestoes/{usuario}")
 async def get_sugestoes(usuario: str, objetivo: str = None):
     checar_usuario(usuario)
-    return sugest(usuario, objetivo)
-
+    return loaded_sugestoes(usuario, objetivo)
 
 # AGENTE
 def montar_contexto(usuario: str):
