@@ -1,17 +1,9 @@
 "use client";
 
-import {
-	CheckCircle2,
-	Dumbbell,
-	Flame,
-	Lightbulb,
-	LoaderCircle,
-} from "lucide-react";
+import { Dumbbell, Flame, Lightbulb, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import useAuth from "@/app/login/auth-context";
+import useAuth, { type Treino } from "@/app/login/auth-context";
 import { Badge } from "@/components/ui/badge";
-import type { SugestaoItem } from "@/lib/api";
 
 const OBJETIVOS = [
 	{ label: "Todos", value: "" },
@@ -28,39 +20,20 @@ export default function SugestoesPage() {
 	const { user, isLoading, fetchSugestoes, sugestoes } = useAuth();
 	const [loading, setLoading] = useState(true);
 	const [objetivo, setObjetivo] = useState<string>("");
-	const [items, setItems] = useState<SugestaoItem[]>([]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: initial load only
 	useEffect(() => {
 		if (user) {
 			setLoading(true);
-			fetchSugestoes(objetivo || undefined)
-				.then(() => {})
-				.catch((err: unknown) => {
-					toast.error(
-						err instanceof Error ? err.message : "Erro ao carregar sugestoes",
-					);
-				})
-				.finally(() => setLoading(false));
+			fetchSugestoes(objetivo || undefined).finally(() => setLoading(false));
 		}
 	}, [user]);
-
-	useEffect(() => {
-		setItems(sugestoes as unknown as SugestaoItem[]);
-	}, [sugestoes]);
 
 	async function handleFilter(obj: string) {
 		setObjetivo(obj);
 		setLoading(true);
-		try {
-			await fetchSugestoes(obj || undefined);
-		} catch (err: unknown) {
-			toast.error(
-				err instanceof Error ? err.message : "Erro ao filtrar sugestoes",
-			);
-		} finally {
-			setLoading(false);
-		}
+		await fetchSugestoes(obj || undefined);
+		setLoading(false);
 	}
 
 	if (isLoading || loading) {
@@ -76,7 +49,7 @@ export default function SugestoesPage() {
 			<div className="mb-8">
 				<h1 className="text-2xl font-bold text-[#0f1a0f]">Sugestoes</h1>
 				<p className="text-sm text-[#6a7a6a]">
-					Recomendacoes de treinos personalizados para voce
+					Recomendacoes de treinos personalizadas para voce
 				</p>
 			</div>
 
@@ -97,7 +70,7 @@ export default function SugestoesPage() {
 				))}
 			</div>
 
-			{items.length === 0 ? (
+			{sugestoes.length === 0 ? (
 				<div className="flex flex-col items-center justify-center rounded-2xl border bg-white py-16 shadow-sm">
 					<Lightbulb className="size-12 text-[#4a5a4a]/30" />
 					<p className="mt-4 text-[#4a5a4a]">Nenhuma sugestao disponivel</p>
@@ -107,7 +80,7 @@ export default function SugestoesPage() {
 				</div>
 			) : (
 				<div className="flex flex-col gap-4">
-					{items.map((treino: SugestaoItem, i: number) => {
+					{sugestoes.map((treino: Treino, i: number) => {
 						const Icon = OBJETIVO_ICONS[treino.objetivo ?? ""] ?? Lightbulb;
 						const isHipertrofia = treino.objetivo === "Hipertrofia";
 						return (
@@ -129,16 +102,9 @@ export default function SugestoesPage() {
 											/>
 										</div>
 										<div>
-											<div className="flex items-center gap-2">
-												<h3 className="font-semibold text-[#0f1a0f]">
-													{treino.nome}
-												</h3>
-												{treino.ja_existe && (
-													<Badge className="bg-gray-100 text-gray-600 border border-gray-200 text-xs">
-														Ja cadastrado
-													</Badge>
-												)}
-											</div>
+											<h3 className="font-semibold text-[#0f1a0f]">
+												{treino.nome}
+											</h3>
 											<div className="flex items-center gap-2 text-sm text-[#6a7a6a]">
 												{treino.tipo && <span>{treino.tipo}</span>}
 												{treino.duracao && (
@@ -185,31 +151,6 @@ export default function SugestoesPage() {
 												<span className="text-[#4a5a4a]">{treino.meta}</span>
 											</p>
 										)}
-									</div>
-								)}
-								{treino.habitos_saudaveis && (
-									<div className="mt-3 rounded-lg bg-green-50 border border-green-100 p-3">
-										<div className="flex items-center gap-2 mb-1">
-											<CheckCircle2 className="size-4 text-green-600" />
-											<span className="text-sm font-medium text-green-800">
-												Habitos Saudaveis
-											</span>
-										</div>
-										<p className="text-sm text-green-700">
-											{treino.habitos_saudaveis}
-										</p>
-									</div>
-								)}
-								{treino.dicas && treino.dicas.length > 0 && (
-									<div className="mt-3 rounded-lg bg-blue-50 border border-blue-100 p-3">
-										<p className="text-sm font-medium text-blue-800 mb-1">
-											Dicas
-										</p>
-										<ul className="list-disc list-inside text-sm text-blue-700 space-y-0.5">
-											{treino.dicas.map((dica: string, j: number) => (
-												<li key={String(j)}>{dica}</li>
-											))}
-										</ul>
 									</div>
 								)}
 							</div>

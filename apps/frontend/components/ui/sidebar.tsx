@@ -1,10 +1,10 @@
 import {
-	Dumbbell,
 	LayoutDashboard,
-	Lightbulb,
 	ListChecks,
 	Target,
 	TrendingUp,
+	Lightbulb,
+	Dumbbell,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -72,10 +72,13 @@ export function Sidebar() {
 
 					<div>
 						<p className="text-sm font-medium">Marina</p>
-						<p className="text-xs text-muted-foreground">Ativo há 7 dias</p>
+						<p className="text-xs text-muted-foreground">
+							Ativo há 7 dias
+						</p>
 					</div>
 				</div>
 			</div>
 		</aside>
 	);
 }
+

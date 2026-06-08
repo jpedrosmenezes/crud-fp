@@ -1,14 +1,14 @@
 "use client";
 
-import { LoaderCircle, Trash2 } from "lucide-react";
 import * as React from "react";
-import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { LoaderCircle, Trash2 } from "lucide-react";
 
 interface ConfirmDialogProps {
 	open: boolean;

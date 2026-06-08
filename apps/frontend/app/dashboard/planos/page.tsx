@@ -6,13 +6,11 @@ import {
 	ChevronUp,
 	Dumbbell,
 	LoaderCircle,
-	Pencil,
 	Plus,
 	Trash2,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 import useAuth, { type Exercicio, type Treino } from "@/app/login/auth-context";
 import { ConfirmDialog } from "@/components/confirm-dialog";
@@ -32,8 +30,8 @@ import { Label } from "@/components/ui/label";
 const treinoSchema = z.object({
 	nome: z
 		.string()
-		.min(1, "O nome e obrigatorio.")
-		.max(64, "O nome pode ter no maximo 64 caracteres."),
+		.min(1, "O nome é obrigatório.")
+		.max(64, "O nome pode ter no máximo 64 caracteres."),
 	tipo: z.string(),
 	data: z.string(),
 	duracao: z.string(),
@@ -48,7 +46,7 @@ function CreateTreinoDialog({ onCreated }: { onCreated: () => void }) {
 	const [loading, setLoading] = useState(false);
 	const { createTreino } = useAuth();
 	const { control, handleSubmit, reset } = useForm<TreinoFormData>({
-		resolver: zodResolver(treinoSchema as never),
+		resolver: zodResolver(treinoSchema as any),
 		defaultValues: {
 			nome: "",
 			tipo: "",
@@ -64,17 +62,17 @@ function CreateTreinoDialog({ onCreated }: { onCreated: () => void }) {
 		try {
 			await createTreino({
 				nome: data.nome,
-				tipo: data.tipo || undefined,
-				data: data.data || undefined,
-				duracao: data.duracao || undefined,
-				objetivo: data.objetivo || undefined,
-				meta: data.meta || undefined,
+				tipo: data.tipo || null,
+				data: data.data || null,
+				duracao: data.duracao || null,
+				objetivo: data.objetivo || null,
+				meta: data.meta || null,
 			});
 			reset();
 			setOpen(false);
 			onCreated();
 		} catch (err) {
-			toast.error(err instanceof Error ? err.message : "Ocorreu um erro");
+			console.error(err);
 		} finally {
 			setLoading(false);
 		}
@@ -120,7 +118,7 @@ function CreateTreinoDialog({ onCreated }: { onCreated: () => void }) {
 							render={({ field }) => (
 								<>
 									<Label htmlFor="tipo">Tipo</Label>
-									<Input id="tipo" placeholder="Ex: Forca, Cardio" {...field} />
+									<Input id="tipo" placeholder="Ex: Força, Cardio" {...field} />
 								</>
 							)}
 						/>
@@ -144,7 +142,7 @@ function CreateTreinoDialog({ onCreated }: { onCreated: () => void }) {
 								control={control}
 								render={({ field }) => (
 									<>
-										<Label htmlFor="duracao">Duracao</Label>
+										<Label htmlFor="duracao">Duração</Label>
 										<Input id="duracao" placeholder="Ex: 60 min" {...field} />
 									</>
 								)}
@@ -193,188 +191,13 @@ function CreateTreinoDialog({ onCreated }: { onCreated: () => void }) {
 	);
 }
 
-function EditTreinoDialog({
-	treino,
-	onUpdated,
-}: {
-	treino: Treino;
-	onUpdated: () => void;
-}) {
-	const [open, setOpen] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const { updateTreino } = useAuth();
-	const { control, handleSubmit, reset } = useForm<TreinoFormData>({
-		resolver: zodResolver(treinoSchema as never),
-		defaultValues: {
-			nome: treino.nome,
-			tipo: treino.tipo || "",
-			data: treino.data || "",
-			duracao: treino.duracao || "",
-			objetivo: treino.objetivo || "",
-			meta: treino.meta || "",
-		},
-	});
-
-	useEffect(() => {
-		if (open) {
-			reset({
-				nome: treino.nome,
-				tipo: treino.tipo || "",
-				data: treino.data || "",
-				duracao: treino.duracao || "",
-				objetivo: treino.objetivo || "",
-				meta: treino.meta || "",
-			});
-		}
-	}, [open, treino, reset]);
-
-	async function onSubmit(data: TreinoFormData) {
-		setLoading(true);
-		try {
-			await updateTreino(treino.nome, {
-				tipo: data.tipo || undefined,
-				data: data.data || undefined,
-				duracao: data.duracao || undefined,
-				objetivo: data.objetivo || undefined,
-				meta: data.meta || undefined,
-			});
-			setOpen(false);
-			onUpdated();
-		} catch (err) {
-			toast.error(err instanceof Error ? err.message : "Ocorreu um erro");
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	return (
-		<Dialog
-			open={open}
-			onOpenChange={(v) => {
-				setOpen(v);
-				if (!v) reset();
-			}}
-		>
-			<DialogTrigger asChild>
-				<Button
-					variant="ghost"
-					size="icon-sm"
-					className="text-blue-500 hover:bg-blue-50 hover:text-blue-600"
-				>
-					<Pencil className="size-4" />
-				</Button>
-			</DialogTrigger>
-			<DialogContent>
-				<DialogTitle>Editar Treino</DialogTitle>
-				<DialogDescription>Atualize os dados do treino</DialogDescription>
-				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="edit-nome">Nome</Label>
-						<Input
-							id="edit-nome"
-							value={treino.nome}
-							disabled
-							className="bg-gray-100"
-						/>
-					</div>
-					<div className="flex flex-col gap-1.5">
-						<Controller
-							name="tipo"
-							control={control}
-							render={({ field }) => (
-								<>
-									<Label htmlFor="edit-tipo">Tipo</Label>
-									<Input
-										id="edit-tipo"
-										placeholder="Ex: Forca, Cardio"
-										{...field}
-									/>
-								</>
-							)}
-						/>
-					</div>
-					<div className="grid grid-cols-2 gap-3">
-						<div className="flex flex-col gap-1.5">
-							<Controller
-								name="data"
-								control={control}
-								render={({ field }) => (
-									<>
-										<Label htmlFor="edit-data">Data</Label>
-										<Input id="edit-data" type="date" {...field} />
-									</>
-								)}
-							/>
-						</div>
-						<div className="flex flex-col gap-1.5">
-							<Controller
-								name="duracao"
-								control={control}
-								render={({ field }) => (
-									<>
-										<Label htmlFor="edit-duracao">Duracao</Label>
-										<Input
-											id="edit-duracao"
-											placeholder="Ex: 60 min"
-											{...field}
-										/>
-									</>
-								)}
-							/>
-						</div>
-					</div>
-					<div className="flex flex-col gap-1.5">
-						<Controller
-							name="objetivo"
-							control={control}
-							render={({ field }) => (
-								<>
-									<Label htmlFor="edit-objetivo">Objetivo</Label>
-									<Input
-										id="edit-objetivo"
-										placeholder="Ex: Hipertrofia"
-										{...field}
-									/>
-								</>
-							)}
-						/>
-					</div>
-					<div className="flex flex-col gap-1.5">
-						<Controller
-							name="meta"
-							control={control}
-							render={({ field }) => (
-								<>
-									<Label htmlFor="edit-meta">Meta</Label>
-									<Input
-										id="edit-meta"
-										placeholder="Ex: Aumentar massa muscular"
-										{...field}
-									/>
-								</>
-							)}
-						/>
-					</div>
-					<Button type="submit" disabled={loading} className="mt-2 gap-1.5">
-						{loading && <LoaderCircle className="size-4 animate-spin" />}
-						{loading ? "Salvando..." : "Salvar"}
-					</Button>
-				</form>
-			</DialogContent>
-		</Dialog>
-	);
-}
-
 const exercicioSchema = z.object({
 	nome: z
 		.string()
-		.min(1, "O nome e obrigatorio.")
-		.max(64, "O nome pode ter no maximo 64 caracteres."),
+		.min(1, "O nome é obrigatório.")
+		.max(64, "O nome pode ter no máximo 64 caracteres."),
 	series: z.string(),
 	repeticoes: z.string(),
-	tempo: z.string(),
-	distancia: z.string(),
-	modo: z.string(),
 });
 
 type ExercicioFormData = z.infer<typeof exercicioSchema>;
@@ -389,14 +212,11 @@ function AddExercicioForm({
 	const { createExercicio } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const { control, handleSubmit, reset } = useForm<ExercicioFormData>({
-		resolver: zodResolver(exercicioSchema as never),
+		resolver: zodResolver(exercicioSchema as any),
 		defaultValues: {
 			nome: "",
 			series: "",
 			repeticoes: "",
-			tempo: "",
-			distancia: "",
-			modo: "series",
 		},
 	});
 
@@ -406,16 +226,16 @@ function AddExercicioForm({
 			await createExercicio({
 				nome: data.nome,
 				treino: treinoNome,
-				modo: data.modo || undefined,
-				series: data.series || undefined,
-				repeticoes: data.repeticoes || undefined,
-				tempo: data.tempo || undefined,
-				distancia: data.distancia || undefined,
+				modo: null,
+				series: data.series || null,
+				repeticoes: data.repeticoes || null,
+				tempo: null,
+				distancia: null,
 			});
 			reset();
 			onAdded();
 		} catch (err) {
-			toast.error(err instanceof Error ? err.message : "Ocorreu um erro");
+			console.error(err);
 		} finally {
 			setLoading(false);
 		}
@@ -426,7 +246,7 @@ function AddExercicioForm({
 			onSubmit={handleSubmit(onSubmit)}
 			className="flex flex-col gap-3 rounded-lg border border-dashed border-[#e8f0e8] p-4"
 		>
-			<p className="text-xs font-medium text-[#4a5a4a]">Adicionar exercicio</p>
+			<p className="text-xs font-medium text-[#4a5a4a]">Adicionar exercício</p>
 			<div className="flex flex-col gap-1.5">
 				<Controller
 					name="nome"
@@ -434,7 +254,7 @@ function AddExercicioForm({
 					render={({ field, fieldState }) => (
 						<>
 							<Input
-								placeholder="Nome do exercicio"
+								placeholder="Nome do exercício"
 								className="h-8 text-sm"
 								{...field}
 							/>
@@ -448,7 +268,7 @@ function AddExercicioForm({
 					name="series"
 					control={control}
 					render={({ field }) => (
-						<Input placeholder="Series" className="h-8 text-sm" {...field} />
+						<Input placeholder="Séries" className="h-8 text-sm" {...field} />
 					)}
 				/>
 				<Controller
@@ -456,31 +276,7 @@ function AddExercicioForm({
 					control={control}
 					render={({ field }) => (
 						<Input
-							placeholder="Repeticoes"
-							className="h-8 text-sm"
-							{...field}
-						/>
-					)}
-				/>
-			</div>
-			<div className="grid grid-cols-2 gap-2">
-				<Controller
-					name="tempo"
-					control={control}
-					render={({ field }) => (
-						<Input
-							placeholder="Tempo (min)"
-							className="h-8 text-sm"
-							{...field}
-						/>
-					)}
-				/>
-				<Controller
-					name="distancia"
-					control={control}
-					render={({ field }) => (
-						<Input
-							placeholder="Distancia (km)"
+							placeholder="Repetições"
 							className="h-8 text-sm"
 							{...field}
 						/>
@@ -502,160 +298,6 @@ function AddExercicioForm({
 				{loading ? "Adicionando..." : "Adicionar"}
 			</Button>
 		</form>
-	);
-}
-
-function EditExercicioDialog({
-	exercicio,
-	index,
-	onUpdated,
-}: {
-	exercicio: Exercicio;
-	index: number;
-	onUpdated: () => void;
-}) {
-	const [open, setOpen] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const { updateExercicio } = useAuth();
-	const { control, handleSubmit, reset } = useForm<ExercicioFormData>({
-		resolver: zodResolver(exercicioSchema as never),
-		defaultValues: {
-			nome: exercicio.nome,
-			series: exercicio.series || "",
-			repeticoes: exercicio.repeticoes || "",
-			tempo: exercicio.tempo || "",
-			distancia: exercicio.distancia || "",
-			modo: exercicio.modo || "series",
-		},
-	});
-
-	useEffect(() => {
-		if (open) {
-			reset({
-				nome: exercicio.nome,
-				series: exercicio.series || "",
-				repeticoes: exercicio.repeticoes || "",
-				tempo: exercicio.tempo || "",
-				distancia: exercicio.distancia || "",
-				modo: exercicio.modo || "series",
-			});
-		}
-	}, [open, exercicio, reset]);
-
-	async function onSubmit(data: ExercicioFormData) {
-		setLoading(true);
-		try {
-			await updateExercicio(index, {
-				nome: data.nome || undefined,
-				series: data.series || undefined,
-				repeticoes: data.repeticoes || undefined,
-				tempo: data.tempo || undefined,
-				distancia: data.distancia || undefined,
-			});
-			setOpen(false);
-			onUpdated();
-		} catch (err) {
-			toast.error(err instanceof Error ? err.message : "Ocorreu um erro");
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	return (
-		<Dialog
-			open={open}
-			onOpenChange={(v) => {
-				setOpen(v);
-				if (!v) reset();
-			}}
-		>
-			<DialogTrigger asChild>
-				<Button
-					variant="ghost"
-					size="icon-xs"
-					className="text-blue-500 hover:bg-blue-50"
-				>
-					<Pencil className="size-3" />
-				</Button>
-			</DialogTrigger>
-			<DialogContent>
-				<DialogTitle>Editar Exercicio</DialogTitle>
-				<DialogDescription>Atualize os dados do exercicio</DialogDescription>
-				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-					<div className="flex flex-col gap-1.5">
-						<Controller
-							name="nome"
-							control={control}
-							render={({ field, fieldState }) => (
-								<>
-									<Label>Nome *</Label>
-									<Input placeholder="Nome do exercicio" {...field} />
-									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
-									)}
-								</>
-							)}
-						/>
-					</div>
-					<div className="grid grid-cols-2 gap-3">
-						<div className="flex flex-col gap-1.5">
-							<Controller
-								name="series"
-								control={control}
-								render={({ field }) => (
-									<>
-										<Label>Series</Label>
-										<Input placeholder="Ex: 3" {...field} />
-									</>
-								)}
-							/>
-						</div>
-						<div className="flex flex-col gap-1.5">
-							<Controller
-								name="repeticoes"
-								control={control}
-								render={({ field }) => (
-									<>
-										<Label>Repeticoes</Label>
-										<Input placeholder="Ex: 12" {...field} />
-									</>
-								)}
-							/>
-						</div>
-					</div>
-					<div className="grid grid-cols-2 gap-3">
-						<div className="flex flex-col gap-1.5">
-							<Controller
-								name="tempo"
-								control={control}
-								render={({ field }) => (
-									<>
-										<Label>Tempo (min)</Label>
-										<Input placeholder="Ex: 30" {...field} />
-									</>
-								)}
-							/>
-						</div>
-						<div className="flex flex-col gap-1.5">
-							<Controller
-								name="distancia"
-								control={control}
-								render={({ field }) => (
-									<>
-										<Label>Distancia (km)</Label>
-										<Input placeholder="Ex: 5" {...field} />
-									</>
-								)}
-							/>
-						</div>
-					</div>
-					<Button type="submit" disabled={loading} className="mt-2 gap-1.5">
-						{loading && <LoaderCircle className="size-4 animate-spin" />}
-						{loading ? "Salvando..." : "Salvar"}
-					</Button>
-				</form>
-			</DialogContent>
-		</Dialog>
 	);
 }
 
@@ -686,13 +328,13 @@ export default function PlanosPage() {
 			setTreinos(t);
 			setExercicios(e);
 		} catch (err) {
-			toast.error(err instanceof Error ? err.message : "Ocorreu um erro");
+			console.error(err);
 		} finally {
 			setLoading(false);
 		}
 	}
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: false positive
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (user) loadData();
 	}, [user]);
@@ -712,7 +354,7 @@ export default function PlanosPage() {
 			setDeleteTarget(null);
 			await loadData();
 		} catch (err) {
-			toast.error(err instanceof Error ? err.message : "Ocorreu um erro");
+			console.error(err);
 		} finally {
 			setDeleting(false);
 		}
@@ -736,12 +378,12 @@ export default function PlanosPage() {
 				title={
 					deleteTarget?.type === "treino"
 						? `Excluir treino "${deleteTarget.name}"?`
-						: "Excluir exercicio?"
+						: "Excluir exercício?"
 				}
 				description={
 					deleteTarget?.type === "treino"
-						? "Essa acao tambem removera todos os exercicios associados e nao pode ser desfeita."
-						: "Essa acao nao pode ser desfeita."
+						? "Essa ação também removerá todos os exercícios associados e não pode ser desfeita."
+						: "Essa ação não pode ser desfeita."
 				}
 				onConfirm={handleConfirmDelete}
 			/>
@@ -752,7 +394,7 @@ export default function PlanosPage() {
 						Planos de Treino
 					</h1>
 					<p className="text-sm text-[#6a7a6a]">
-						Gerencie seus treinos e exercicios
+						Gerencie seus treinos e exercícios
 					</p>
 				</div>
 				<CreateTreinoDialog onCreated={loadData} />
@@ -763,7 +405,7 @@ export default function PlanosPage() {
 					<Dumbbell className="size-12 text-[#4a5a4a]/30" />
 					<p className="mt-4 text-[#4a5a4a]">Nenhum treino cadastrado</p>
 					<p className="text-sm text-[#8a9a8a]">
-						Clique em "Novo Treino" para comecar
+						Clique em "Novo Treino" para começar
 					</p>
 				</div>
 			) : (
@@ -778,8 +420,8 @@ export default function PlanosPage() {
 								key={treino.nome + String(_)}
 								className="rounded-2xl border bg-white shadow-sm"
 							>
-								{/** biome-ignore lint/a11y/noStaticElementInteractions: false positive */}
-								{/** biome-ignore lint/a11y/useKeyWithClickEvents: false positive */}
+								{/** biome-ignore lint/a11y/noStaticElementInteractions: <explanation> */}
+								{/** biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
 								<div
 									onClick={() =>
 										setExpanded((prev) => {
@@ -820,12 +462,11 @@ export default function PlanosPage() {
 											</div>
 										</div>
 									</div>
-									<div className="flex items-center gap-1">
+									<div className="flex items-center gap-2">
 										<Badge variant="secondary" className="text-xs">
-											{treinoExercicios.length} exercicio
+											{treinoExercicios.length} exercício
 											{treinoExercicios.length !== 1 ? "s" : ""}
 										</Badge>
-										<EditTreinoDialog treino={treino} onUpdated={loadData} />
 										<Button
 											variant="ghost"
 											size="icon-sm"
@@ -886,7 +527,7 @@ export default function PlanosPage() {
 																</span>
 																<span className="text-xs text-[#8a9a8a]">
 																	{[
-																		ex.series && `${ex.series} series`,
+																		ex.series && `${ex.series} séries`,
 																		ex.repeticoes && `${ex.repeticoes} reps`,
 																		ex.tempo && `${ex.tempo} min`,
 																		ex.distancia && `${ex.distancia} km`,
@@ -895,33 +536,26 @@ export default function PlanosPage() {
 																		.join(" · ")}
 																</span>
 															</div>
-															<div className="flex items-center gap-1">
-																<EditExercicioDialog
-																	exercicio={ex}
-																	index={globalIndex}
-																	onUpdated={loadData}
-																/>
-																<Button
-																	variant="ghost"
-																	size="icon-sm"
-																	onClick={() =>
-																		setDeleteTarget({
-																			type: "exercicio",
-																			index: globalIndex,
-																		})
-																	}
-																	className="text-red-500 hover:bg-red-50 hover:text-red-600"
-																>
-																	<Trash2 className="size-4" />
-																</Button>
-															</div>
+															<Button
+																variant="ghost"
+																size="icon-sm"
+																onClick={() =>
+																	setDeleteTarget({
+																		type: "exercicio",
+																		index: globalIndex,
+																	})
+																}
+																className="text-red-500 hover:bg-red-50 hover:text-red-600"
+															>
+																<Trash2 className="size-4" />
+															</Button>
 														</div>
 													);
 												})}
 											</div>
 										) : (
 											<p className="text-sm text-[#8a9a8a]">
-												Nenhum exercicio neste treino
+												Nenhum exercício neste treino
 											</p>
 										)}
 										<div className="mt-4">
