@@ -1,0 +1,3 @@
+Fly|Treino de Peito|series|3|12||
+Bike|Treino de cardio|series|3|10||
+Esteira|Treino de cardio|series|3|10||

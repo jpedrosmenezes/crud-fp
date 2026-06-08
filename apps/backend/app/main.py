@@ -5,8 +5,10 @@ import os
 import datetime as dt
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env"))
-import anthropic 
+load_dotenv(
+    dotenv_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env")
+)
+import anthropic
 
 app = FastAPI()
 
@@ -19,9 +21,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-BASE_DIR      = os.path.dirname(os.path.abspath(__file__))
-USUARIOS_DIR  = os.path.join(BASE_DIR, "data", "usuarios")
-ARQ_USUARIOS  = os.path.join(BASE_DIR, "data", "usuarios.txt")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+USUARIOS_DIR = os.path.join(BASE_DIR, "data", "usuarios")
+ARQ_USUARIOS = os.path.join(BASE_DIR, "data", "usuarios.txt")
+
 
 def dir_failsafe(usuario: str = None):
     os.makedirs(os.path.join(BASE_DIR, "data"), exist_ok=True)
@@ -29,9 +32,11 @@ def dir_failsafe(usuario: str = None):
     if usuario:
         os.makedirs(os.path.join(USUARIOS_DIR, usuario), exist_ok=True)
 
-#USUARIOS
+
+# USUARIOS
 def get_usuario_path(usuario: str, arquivo: str) -> str:
     return os.path.join(USUARIOS_DIR, usuario, arquivo)
+
 
 def load_usuarios() -> list[str]:
     dir_failsafe()
@@ -40,17 +45,21 @@ def load_usuarios() -> list[str]:
     with open(ARQ_USUARIOS, "r", encoding="utf-8") as f:
         return [linha.strip() for linha in f if linha.strip()]
 
+
 def usuario_existe(nome: str) -> bool:
     return nome.lower() in [u.lower() for u in load_usuarios()]
+
 
 def criar_usuario(nome: str):
     dir_failsafe(nome)
     with open(ARQ_USUARIOS, "a", encoding="utf-8") as f:
         f.write(nome + "\n")
 
+
 def checar_usuario(usuario: str):
     if not usuario_existe(usuario):
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
+
 
 # TREINOS
 def save_treinos(usuario: str, treinos: list):
@@ -58,15 +67,18 @@ def save_treinos(usuario: str, treinos: list):
     path = get_usuario_path(usuario, "treinos.txt")
     with open(path, "w", encoding="utf-8") as f:
         for c in treinos:
-            linha = "|".join([
-                c.get("nome", ""),
-                c.get("tipo", ""),
-                c.get("data", ""),
-                c.get("duracao", ""),
-                c.get("objetivo", ""),
-                c.get("meta", "")
-            ])
+            linha = "|".join(
+                [
+                    c.get("nome", ""),
+                    c.get("tipo", ""),
+                    c.get("data", ""),
+                    c.get("duracao", ""),
+                    c.get("objetivo", ""),
+                    c.get("meta", ""),
+                ]
+            )
             f.write(linha + "\n")
+
 
 def load_treinos(usuario: str) -> list:
     dir_failsafe(usuario)
@@ -78,15 +90,18 @@ def load_treinos(usuario: str) -> list:
         for linha in f:
             data = linha.strip().split("|")
             if len(data) >= 4:
-                treinos.append({
-                    "nome":     data[0],
-                    "tipo":     data[1],
-                    "data":     data[2],
-                    "duracao":  data[3],
-                    "objetivo": data[4] if len(data) > 4 else "",
-                    "meta":     data[5] if len(data) > 5 else ""
-                })
+                treinos.append(
+                    {
+                        "nome": data[0],
+                        "tipo": data[1],
+                        "data": data[2],
+                        "duracao": data[3],
+                        "objetivo": data[4] if len(data) > 4 else "",
+                        "meta": data[5] if len(data) > 5 else "",
+                    }
+                )
     return treinos
+
 
 # EXERCICIOS
 def save_exercicios(usuario: str, exercicios: list):
@@ -94,16 +109,19 @@ def save_exercicios(usuario: str, exercicios: list):
     path = get_usuario_path(usuario, "exercicios.txt")
     with open(path, "w", encoding="utf-8") as f:
         for c in exercicios:
-            linha = "|".join([
-                c.get("nome", ""),
-                c.get("treino", ""),
-                c.get("modo", ""),
-                str(c.get("series", 0)),
-                str(c.get("repeticoes", 0)),
-                str(c.get("tempo", 0)),
-                str(c.get("distancia", 0))
-            ])
+            linha = "|".join(
+                [
+                    c.get("nome", ""),
+                    c.get("treino", ""),
+                    c.get("modo", ""),
+                    str(c.get("series", 0)),
+                    str(c.get("repeticoes", 0)),
+                    str(c.get("tempo", 0)),
+                    str(c.get("distancia", 0)),
+                ]
+            )
             f.write(linha + "\n")
+
 
 def load_exercicios(usuario: str) -> list:
     dir_failsafe(usuario)
@@ -115,16 +133,19 @@ def load_exercicios(usuario: str) -> list:
         for linha in f:
             data = linha.strip().split("|")
             if len(data) >= 7:
-                exercicios.append({
-                    "nome":       data[0],
-                    "treino":     data[1],
-                    "modo":       data[2],
-                    "series":     data[3],
-                    "repeticoes": data[4],
-                    "tempo":      data[5],
-                    "distancia":  data[6]
-                })
+                exercicios.append(
+                    {
+                        "nome": data[0],
+                        "treino": data[1],
+                        "modo": data[2],
+                        "series": data[3],
+                        "repeticoes": data[4],
+                        "tempo": data[5],
+                        "distancia": data[6],
+                    }
+                )
     return exercicios
+
 
 # METAS
 def save_metas(usuario: str, metas: list):
@@ -132,12 +153,15 @@ def save_metas(usuario: str, metas: list):
     path = get_usuario_path(usuario, "metas.txt")
     with open(path, "w", encoding="utf-8") as f:
         for m in metas:
-            linha = "|".join([
-        str(m.get("descricao", "")),
-        str(m.get("prazo", "")),
-        str(m.get("status", "Em andamento"))
-    ])
+            linha = "|".join(
+                [
+                    str(m.get("descricao", "")),
+                    str(m.get("prazo", "")),
+                    str(m.get("status", "Em andamento")),
+                ]
+            )
             f.write(linha + "\n")
+
 
 def load_metas(usuario: str) -> list:
     dir_failsafe(usuario)
@@ -149,12 +173,11 @@ def load_metas(usuario: str) -> list:
         for linha in f:
             data = linha.strip().split("|")
             if len(data) >= 3:
-                metas.append({
-                    "descricao": data[0],
-                    "prazo":     data[1],
-                    "status":    data[2]
-                })
+                metas.append(
+                    {"descricao": data[0], "prazo": data[1], "status": data[2]}
+                )
     return metas
+
 
 # EVOLUCOES
 def save_evolucoes(usuario: str, evolucoes: list):
@@ -162,13 +185,16 @@ def save_evolucoes(usuario: str, evolucoes: list):
     path = get_usuario_path(usuario, "evolucao.txt")
     with open(path, "w", encoding="utf-8") as f:
         for e in evolucoes:
-            linha = "|".join([
-                e.get("data", ""),
-                str(e.get("peso", 0)),
-                str(e.get("altura", 0)),
-                str(e.get("gordura", 0))
-            ])
+            linha = "|".join(
+                [
+                    e.get("data", ""),
+                    str(e.get("peso", 0)),
+                    str(e.get("altura", 0)),
+                    str(e.get("gordura", 0)),
+                ]
+            )
             f.write(linha + "\n")
+
 
 def load_evolucoes(usuario: str) -> list:
     dir_failsafe(usuario)
@@ -180,18 +206,22 @@ def load_evolucoes(usuario: str) -> list:
         for linha in f:
             data = linha.strip().split("|")
             if len(data) >= 4:
-                evolucoes.append({
-                    "data":    data[0],
-                    "peso":    data[1],
-                    "altura":  data[2],
-                    "gordura": data[3]
-                })
+                evolucoes.append(
+                    {
+                        "data": data[0],
+                        "peso": data[1],
+                        "altura": data[2],
+                        "gordura": data[3],
+                    }
+                )
     return evolucoes
 
-#ROTAS USUARIO
+
+# ROTAS USUARIO
 @app.get("/usuarios")
 async def get_usuarios():
     return {"usuarios": load_usuarios()}
+
 
 @app.post("/login")
 async def login(data: dict = Body(...)):
@@ -208,11 +238,13 @@ async def login(data: dict = Body(...)):
     nome_salvo = next(u for u in usuarios if u.lower() == nome.lower())
     return {"ok": True, "criado": False, "usuario": nome_salvo}
 
-#ROTAS TREINOS
+
+# ROTAS TREINOS
 @app.get("/treinos/{usuario}")
 async def get_treinos(usuario: str):
     checar_usuario(usuario)
     return load_treinos(usuario)
+
 
 @app.post("/treinos/{usuario}", status_code=201)
 async def post_treino(usuario: str, data: dict = Body(...)):
@@ -220,16 +252,19 @@ async def post_treino(usuario: str, data: dict = Body(...)):
     if not data.get("nome"):
         raise HTTPException(status_code=400, detail="Nome obrigatório")
     treinos = load_treinos(usuario)
-    treinos.append({
-        "nome":     data.get("nome", ""),
-        "tipo":     data.get("tipo", ""),
-        "data":     data.get("data", ""),
-        "duracao":  data.get("duracao", ""),
-        "objetivo": data.get("objetivo", ""),
-        "meta":     data.get("meta", "")
-    })
+    treinos.append(
+        {
+            "nome": data.get("nome", ""),
+            "tipo": data.get("tipo", ""),
+            "data": data.get("data", ""),
+            "duracao": data.get("duracao", ""),
+            "objetivo": data.get("objetivo", ""),
+            "meta": data.get("meta", ""),
+        }
+    )
     save_treinos(usuario, treinos)
     return {"ok": True}
+
 
 @app.put("/treinos/{usuario}/{nome}")
 async def edit_treino(usuario: str, nome: str, data: dict = Body(...)):
@@ -237,16 +272,17 @@ async def edit_treino(usuario: str, nome: str, data: dict = Body(...)):
     treinos = load_treinos(usuario)
     for c in treinos:
         if c["nome"] == nome:
-            c["tipo"]     = data.get("tipo",     c["tipo"])
-            c["data"]     = data.get("data",     c["data"])
-            c["duracao"]  = data.get("duracao",  c["duracao"])
+            c["tipo"] = data.get("tipo", c["tipo"])
+            c["data"] = data.get("data", c["data"])
+            c["duracao"] = data.get("duracao", c["duracao"])
             c["objetivo"] = data.get("objetivo", c["objetivo"])
-            c["meta"]     = data.get("meta",     c["meta"])
+            c["meta"] = data.get("meta", c["meta"])
             break
     else:
         raise HTTPException(status_code=404, detail="Treino não encontrado")
     save_treinos(usuario, treinos)
     return {"ok": True}
+
 
 @app.delete("/treinos/{usuario}/{nome}")
 async def delete_treino(usuario: str, nome: str):
@@ -260,7 +296,8 @@ async def delete_treino(usuario: str, nome: str):
     save_exercicios(usuario, [e for e in exercicios if e["treino"] != nome])
     return {"ok": True}
 
-#ROTAS EXERCICIOS
+
+# ROTAS EXERCICIOS
 @app.get("/exercicios/{usuario}")
 async def get_exercicios(usuario: str, treino: str = None):
     checar_usuario(usuario)
@@ -269,23 +306,27 @@ async def get_exercicios(usuario: str, treino: str = None):
         exercicios = [e for e in exercicios if e["treino"] == treino]
     return exercicios
 
+
 @app.post("/exercicios/{usuario}", status_code=201)
 async def post_exercicios(usuario: str, data: dict = Body(...)):
     checar_usuario(usuario)
     if not data.get("nome"):
         raise HTTPException(status_code=400, detail="Nome obrigatório")
     exercicios = load_exercicios(usuario)
-    exercicios.append({
-        "nome":       data.get("nome", ""),
-        "treino":     data.get("treino", ""),
-        "modo":       data.get("modo", "series"),
-        "series":     str(data.get("series", 0)),
-        "repeticoes": str(data.get("repeticoes", 0)),
-        "tempo":      str(data.get("tempo", 0)),
-        "distancia":  str(data.get("distancia", 0))
-    })
+    exercicios.append(
+        {
+            "nome": data.get("nome", ""),
+            "treino": data.get("treino", ""),
+            "modo": data.get("modo", "series"),
+            "series": str(data.get("series", 0)),
+            "repeticoes": str(data.get("repeticoes", 0)),
+            "tempo": str(data.get("tempo", 0)),
+            "distancia": str(data.get("distancia", 0)),
+        }
+    )
     save_exercicios(usuario, exercicios)
     return {"ok": True}
+
 
 @app.put("/exercicios/{usuario}/{index}")
 async def edit_exercicios(usuario: str, index: int, data: dict = Body(...)):
@@ -293,15 +334,20 @@ async def edit_exercicios(usuario: str, index: int, data: dict = Body(...)):
     exercicios = load_exercicios(usuario)
     if index < 0 or index >= len(exercicios):
         raise HTTPException(status_code=404, detail="Exercício não encontrado")
-    exercicios[index]["nome"]       = data.get("nome",       exercicios[index]["nome"])
-    exercicios[index]["treino"]     = data.get("treino",     exercicios[index]["treino"])
-    exercicios[index]["modo"]       = data.get("modo",       exercicios[index]["modo"])
-    exercicios[index]["series"]     = data.get("series",     exercicios[index]["series"])
-    exercicios[index]["repeticoes"] = data.get("repeticoes", exercicios[index]["repeticoes"])
-    exercicios[index]["tempo"]      = data.get("tempo",      exercicios[index]["tempo"])
-    exercicios[index]["distancia"]  = data.get("distancia",  exercicios[index]["distancia"])
+    exercicios[index]["nome"] = data.get("nome", exercicios[index]["nome"])
+    exercicios[index]["treino"] = data.get("treino", exercicios[index]["treino"])
+    exercicios[index]["modo"] = data.get("modo", exercicios[index]["modo"])
+    exercicios[index]["series"] = data.get("series", exercicios[index]["series"])
+    exercicios[index]["repeticoes"] = data.get(
+        "repeticoes", exercicios[index]["repeticoes"]
+    )
+    exercicios[index]["tempo"] = data.get("tempo", exercicios[index]["tempo"])
+    exercicios[index]["distancia"] = data.get(
+        "distancia", exercicios[index]["distancia"]
+    )
     save_exercicios(usuario, exercicios)
     return {"ok": True}
+
 
 @app.delete("/exercicios/{usuario}/{index}")
 async def delete_exercicios(usuario: str, index: int):
@@ -313,11 +359,13 @@ async def delete_exercicios(usuario: str, index: int):
     save_exercicios(usuario, exercicios)
     return {"ok": True}
 
-#ROTAS METAS
+
+# ROTAS METAS
 @app.get("/metas/{usuario}")
 async def get_metas(usuario: str):
     checar_usuario(usuario)
     return load_metas(usuario)
+
 
 @app.post("/metas/{usuario}", status_code=201)
 async def post_metas(usuario: str, data: dict = Body(...)):
@@ -325,13 +373,16 @@ async def post_metas(usuario: str, data: dict = Body(...)):
     if not data.get("descricao"):
         raise HTTPException(status_code=400, detail="Descrição obrigatória")
     metas = load_metas(usuario)
-    metas.append({
-        "descricao": data.get("descricao", ""),
-        "prazo":     data.get("prazo", ""),
-        "status":    data.get("status", "Em andamento")
-    })
+    metas.append(
+        {
+            "descricao": data.get("descricao", ""),
+            "prazo": data.get("prazo", ""),
+            "status": data.get("status", "Em andamento"),
+        }
+    )
     save_metas(usuario, metas)
     return {"ok": True}
+
 
 @app.put("/metas/{usuario}/{index}")
 async def edit_meta(usuario: str, index: int, data: dict = Body(...)):
@@ -340,10 +391,11 @@ async def edit_meta(usuario: str, index: int, data: dict = Body(...)):
     if index < 0 or index >= len(metas):
         raise HTTPException(status_code=404, detail="Meta não encontrada")
     metas[index]["descricao"] = data.get("descricao", metas[index]["descricao"])
-    metas[index]["prazo"]     = data.get("prazo",     metas[index]["prazo"])
-    metas[index]["status"]    = data.get("status",    metas[index]["status"])
+    metas[index]["prazo"] = data.get("prazo", metas[index]["prazo"])
+    metas[index]["status"] = data.get("status", metas[index]["status"])
     save_metas(usuario, metas)
     return {"ok": True}
+
 
 @app.delete("/metas/{usuario}/{index}")
 async def delete_meta(usuario: str, index: int):
@@ -355,11 +407,13 @@ async def delete_meta(usuario: str, index: int):
     save_metas(usuario, metas)
     return {"ok": True}
 
-#ROTAS EVOLUCOES
+
+# ROTAS EVOLUCOES
 @app.get("/evolucoes/{usuario}")
 async def get_evolucoes(usuario: str):
     checar_usuario(usuario)
     return load_evolucoes(usuario)
+
 
 @app.post("/evolucoes/{usuario}", status_code=201)
 async def post_evolucoes(usuario: str, data: dict = Body(...)):
@@ -367,14 +421,17 @@ async def post_evolucoes(usuario: str, data: dict = Body(...)):
     if not data.get("data"):
         raise HTTPException(status_code=400, detail="Data obrigatória")
     evolucoes = load_evolucoes(usuario)
-    evolucoes.append({
-        "data":    data.get("data", ""),
-        "peso":    data.get("peso", ""),
-        "altura":  data.get("altura", ""),
-        "gordura": data.get("gordura", "")
-    })
+    evolucoes.append(
+        {
+            "data": data.get("data", ""),
+            "peso": data.get("peso", ""),
+            "altura": data.get("altura", ""),
+            "gordura": data.get("gordura", ""),
+        }
+    )
     save_evolucoes(usuario, evolucoes)
     return {"ok": True}
+
 
 @app.put("/evolucoes/{usuario}/{index}")
 async def edit_evolucoes(usuario: str, index: int, data: dict = Body(...)):
@@ -382,12 +439,13 @@ async def edit_evolucoes(usuario: str, index: int, data: dict = Body(...)):
     evolucoes = load_evolucoes(usuario)
     if index < 0 or index >= len(evolucoes):
         raise HTTPException(status_code=404, detail="Evolução não encontrada")
-    evolucoes[index]["data"]    = data.get("data",    evolucoes[index]["data"])
-    evolucoes[index]["peso"]    = data.get("peso",    evolucoes[index]["peso"])
-    evolucoes[index]["altura"]  = data.get("altura",  evolucoes[index]["altura"])
+    evolucoes[index]["data"] = data.get("data", evolucoes[index]["data"])
+    evolucoes[index]["peso"] = data.get("peso", evolucoes[index]["peso"])
+    evolucoes[index]["altura"] = data.get("altura", evolucoes[index]["altura"])
     evolucoes[index]["gordura"] = data.get("gordura", evolucoes[index]["gordura"])
     save_evolucoes(usuario, evolucoes)
     return {"ok": True}
+
 
 @app.delete("/evolucoes/{usuario}/{index}")
 async def delete_evolucoes(usuario: str, index: int):
@@ -399,25 +457,26 @@ async def delete_evolucoes(usuario: str, index: int):
     save_evolucoes(usuario, evolucoes)
     return {"ok": True}
 
-#SUGESTOES
-def sujest(usuario: str, objetivo_usuario=None):
+
+# SUGESTOES
+def sugest(usuario: str, objetivo_usuario=None):
     sugestoes = {
         "Hipertrofia": {
-            "nome":     "Sugestão: peito e tríceps",
-            "tipo":     "Musculação",
-            "data":     dt.date.today().strftime("%d/%m/%Y"),
-            "duracao":  "60 min",
+            "nome": "Sugestão: peito e tríceps",
+            "tipo": "Musculação",
+            "data": dt.date.today().strftime("%d/%m/%Y"),
+            "duracao": "60 min",
             "objetivo": "Hipertrofia",
-            "meta":     "Ganho de massa magra"
+            "meta": "Ganho de massa magra",
         },
         "Emagrecimento": {
-            "nome":     "Sugestão: corrida",
-            "tipo":     "Cardio / Funcional",
-            "data":     dt.date.today().strftime("%d/%m/%Y"),
-            "duracao":  "45 min",
+            "nome": "Sugestão: corrida",
+            "tipo": "Cardio / Funcional",
+            "data": dt.date.today().strftime("%d/%m/%Y"),
+            "duracao": "45 min",
             "objetivo": "Emagrecimento",
-            "meta":     "Déficit calórico"
-        }
+            "meta": "Déficit calórico",
+        },
     }
 
     lista_treinos = load_treinos(usuario)
@@ -430,19 +489,23 @@ def sujest(usuario: str, objetivo_usuario=None):
 
     return {"origem": "nenhum", "dados": []}
 
+
 @app.get("/sugestoes/{usuario}")
 async def get_sugestoes(usuario: str, objetivo: str = None):
     checar_usuario(usuario)
-    return sujest(usuario, objetivo)
+    return sugest(usuario, objetivo)
 
-#AGENTE
+
+# AGENTE
 def montar_contexto(usuario: str):
-    treinos    = load_treinos(usuario)
+    treinos = load_treinos(usuario)
     exercicios = load_exercicios(usuario)
-    metas      = load_metas(usuario)
-    evolucoes  = load_evolucoes(usuario)
+    metas = load_metas(usuario)
+    evolucoes = load_evolucoes(usuario)
 
-    contexto  = f"Você é um assistente personal trainer inteligente. Responda em português.\n"
+    contexto = (
+        f"Você é um assistente personal trainer inteligente. Responda em português.\n"
+    )
     contexto += f"Você está atendendo o usuário: {usuario}\n\n"
 
     contexto += "=== TREINOS DO USUÁRIO ===\n"
@@ -455,13 +518,16 @@ def montar_contexto(usuario: str):
 
     contexto += "\n=== METAS ===\n"
     for m in metas:
-        contexto += f"- {m['descricao']} | Prazo: {m['prazo']} | Status: {m['status']}\n"
+        contexto += (
+            f"- {m['descricao']} | Prazo: {m['prazo']} | Status: {m['status']}\n"
+        )
 
     contexto += "\n=== EVOLUÇÃO FÍSICA ===\n"
     for ev in evolucoes:
         contexto += f"- Data: {ev['data']} | Peso: {ev['peso']}kg | Altura: {ev['altura']}m | Gordura: {ev['gordura']}%\n"
 
     return contexto
+
 
 @app.post("/agente/{usuario}")
 async def agente(usuario: str, data: dict = Body(...)):
@@ -477,9 +543,9 @@ async def agente(usuario: str, data: dict = Body(...)):
         messages=[
             {
                 "role": "user",
-                "content": f"{contexto}\n\nPergunta do usuário: {pergunta}"
+                "content": f"{contexto}\n\nPergunta do usuário: {pergunta}",
             }
-        ]
+        ],
     )
     resposta = message.content[0].text
     return {"resposta": resposta}
