@@ -17,13 +17,10 @@ Backend da aplicação desenvolvido com FastAPI.
 ```txt
 backend/
 ├── app/
-│   ├── routes/
-│   ├── schemas/
-│   ├── services/
+│   ├── data/
 │   └── main.py
-│
-├── requirements.txt
-└── README.md
+├── README.md
+└── requirements.txt
 ```
 
 ---
